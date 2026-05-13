@@ -1,0 +1,31 @@
+import { use } from 'react';
+import { Link } from 'react-router';
+import IssueCard from '../IssueCard/IssueCard';
+
+const RecentIssues = ({ usePromiseRecentIssues }) => {
+    const recentIssues = use(usePromiseRecentIssues);
+    console.log(recentIssues, 'recentIssues');
+
+    return (
+        <div className='main-container'>
+            <div className='flex justify-between items-center mb-4'>
+                <div>
+                    <h3>Recent Reports</h3>
+                    <p>Real-time updates from your community stewards.</p>
+                </div>
+                <div>
+                    <Link to="/issues" className='text-secondary'>View All Reports</Link>
+                </div>
+            </div>
+            <div className='grid-auto-fit'>
+                {
+                    recentIssues.map(issue =>
+                        <IssueCard key={issue._id} issue={issue} ></IssueCard>
+                    )
+                }
+            </div>
+        </div>
+    );
+};
+
+export default RecentIssues;

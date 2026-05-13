@@ -11,6 +11,7 @@ import Register from './components/Register/Register';
 import AddIssue from './components/AddIssue/AddIssue';
 import MyIssues from './components/MyIssues/MyIssues';
 import MyContributions from './components/MyContributions/MyContributions';
+import IssueDetails from './components/IssueDetails/IssueDetails';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,12 @@ const router = createBrowserRouter([
       {
         path: "myContributions",
         element: <MyContributions></MyContributions>,
-      }
+      },
+      {
+        path: "/issueDetails/:id",
+        loader: ({params}) => fetch(`http://localhost:3000/issues/${params.id}`),
+        Component: IssueDetails
+      },
     ]
   },
 ]);

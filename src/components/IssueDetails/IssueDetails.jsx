@@ -1,9 +1,12 @@
-
+import { useLoaderData } from "react-router";
 
 const IssueDetails = () => {
+    const data = useLoaderData();
+    console.log(data, 'data from loader');
+
     return (
-        <div>
-            <h2>Issue Details</h2>
+        <div className="main-container">
+            <h1>Issue Details</h1>
         </div>
     );
 };

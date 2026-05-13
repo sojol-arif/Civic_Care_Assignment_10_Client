@@ -1,10 +1,465 @@
+/* ==========================================================
+   CivicCare Design System
+   Stack: Tailwind v4 + DaisyUI + Google Fonts
+   Palette: Forest Green #0f5238 / Teal Blue #006399
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+/* ==========================================================
+   1. DAISYUI LIGHT THEME
+   ========================================================== */
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #0f5238;
-  --color-primary-content: white;
 
-  --color-secondary: #006399;
+  /* ── Brand ── */
+  --color-primary:         #0f5238;   /* Forest Green — CTAs, active states */
+  --color-primary-content: #ffffff;
+
+  --color-secondary:         #006399; /* Teal Blue — links, secondary buttons */
+  --color-secondary-content: #ffffff;
+
+  --color-accent:         #d7efe4;    /* Mint tint — soft badge bg, highlights */
+  --color-accent-content: #0f5238;
+
+  /* ── Backgrounds ── */
+  --color-base-100: #f8faf6;          /* Page background */
+  --color-base-200: #eef2ec;          /* Card / sidebar background */
+  --color-base-300: #dfe6dd;          /* Borders, dividers */
+
+  /* ── Text ── */
+  --color-neutral:         #1f2937;
+  --color-neutral-content: #ffffff;
+
+  /* ── Feedback ── */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error:   #dc2626;
+  --color-info:    #0ea5e9;
+
+  /* ── Shape ── */
+  --radius-box: 1rem;    /* cards, modals */
+  --radius-btn: 0.5rem;  /* buttons */
+  --border: 1px;
+}
+
+
+/* ==========================================================
+   2. DAISYUI DARK THEME
+   ========================================================== */
+
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary:         #3ddc84;
+  --color-primary-content: #062016;
+
+  --color-secondary:         #38bdf8;
+  --color-secondary-content: #001c2e;
+
+  --color-accent:         #134d35;
+  --color-accent-content: #d7efe4;
+
+  --color-base-100: #0f1a14;
+  --color-base-200: #162110;
+  --color-base-300: #1f2d1c;
+
+  --color-neutral:         #e5e7eb;
+  --color-neutral-content: #0f1a14;
+
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error:   #f87171;
+  --color-info:    #38bdf8;
+
+  --radius-box: 1rem;
+  --radius-btn: 0.5rem;
+  --border: 1px;
+}
+
+
+/* ==========================================================
+   3. BASE LAYER — Typography & Global Defaults
+   ========================================================== */
+
+@layer base {
+
+  /* ── Global body ── */
+  body {
+    font-family: "Open Sans", sans-serif;
+    color: #404943;
+    background-color: var(--color-base-100);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Headings ── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inter", sans-serif;
+    color: #101828;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* Scale */
+  h1 { @apply text-4xl md:text-6xl; }   /* Hero: 36–60px */
+  h2 { @apply text-3xl md:text-5xl; }   /* Section title: 30–48px */
+  h3 { @apply text-2xl md:text-3xl; }   /* Card title / Sub-section */
+  h4 { @apply text-xl md:text-2xl; }
+  h5 { @apply text-lg md:text-xl; }
+  h6 { @apply text-base md:text-lg; }
+
+  /* Body copy */
+  p  { @apply text-base md:text-lg; }
+
+  /* Links */
+  a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a:hover { color: var(--color-primary); }
+}
+
+
+/* ==========================================================
+   4. COMPONENT LAYER — Reusable Class Utilities
+   ========================================================== */
+
+@layer components {
+
+  /* ──────────────────────────────────────
+     4A. LAYOUT
+  ────────────────────────────────────── */
+
+  /* Max-width wrapper */
+  .main-container {
+    @apply max-w-[1230px] mx-auto px-4 md:px-6;
+  }
+
+  /* Vertical section breathing room */
+  .section-space {
+    @apply py-16 md:py-24;
+  }
+
+  /* Tighter section variant */
+  .section-space-sm {
+    @apply py-10 md:py-16;
+  }
+
+
+  /* ──────────────────────────────────────
+     4B. SECTION HEADINGS
+  ────────────────────────────────────── */
+
+  /* Wraps eyebrow + title + description */
+  .section-header {
+    @apply max-w-2xl mb-12;
+  }
+
+  /* Center-aligned variant */
+  .section-header-center {
+    @apply max-w-2xl mx-auto text-center mb-12;
+  }
+
+  /* Small label above title e.g. "RECENT REPORTS" */
+  .section-eyebrow {
+    @apply text-sm font-semibold tracking-widest uppercase text-primary mb-2;
+  }
+
+  /* Main section h2 */
+  .section-title {
+    @apply text-3xl md:text-5xl font-bold text-neutral;
+  }
+
+  /* Supporting description beneath title */
+  .section-description {
+    @apply text-base md:text-lg text-[#667085] mt-4 leading-relaxed;
+  }
+
+
+  /* ──────────────────────────────────────
+     4C. CARDS
+  ────────────────────────────────────── */
+
+  /* Standard white card */
+  .custom-card {
+    @apply bg-white border border-base-300 rounded-3xl shadow-sm
+           hover:shadow-xl transition-all duration-300;
+  }
+
+  /* Soft green tinted card (accent bg) */
+  .accent-card {
+    @apply bg-accent border border-accent rounded-3xl shadow-sm
+           hover:shadow-md transition-all duration-300;
+  }
+
+  /* Dark brand card (used in "Join Clean Drive" section) */
+  .dark-brand-card {
+    @apply bg-primary text-primary-content rounded-3xl p-8 md:p-12;
+  }
+
+  /* Issue card (image on top, content below) */
+  .issue-card {
+    @apply overflow-hidden flex flex-col;
+  }
+
+  .issue-card-image {
+    @apply w-full h-48 object-cover;
+  }
+
+  .issue-card-body {
+    @apply p-5 flex flex-col gap-3 flex-1;
+  }
+
+  .issue-card-title {
+    @apply text-lg font-bold text-neutral leading-snug;
+  }
+
+  .issue-card-desc {
+    @apply text-sm text-[#667085] line-clamp-2 flex-1;
+  }
+
+  .issue-card-footer {
+    @apply flex items-center gap-1 text-sm text-[#667085] mt-1;
+  }
+
+
+  /* ──────────────────────────────────────
+     4D. BUTTONS
+  ────────────────────────────────────── */
+
+  /* Filled green — primary CTA */
+  .btn-primary-custom {
+    @apply btn bg-primary text-white border-none rounded-lg
+           hover:bg-[#0b3f2b] transition-colors duration-200;
+  }
+
+  /* Outlined green */
+  .btn-outline-custom {
+    @apply btn btn-outline border-primary text-primary rounded-lg
+           hover:bg-primary hover:text-white transition-colors duration-200;
+  }
+
+  /* Ghost / text link style */
+  .btn-ghost-custom {
+    @apply btn btn-ghost text-primary hover:bg-accent rounded-lg;
+  }
+
+  /* Secondary blue button */
+  .btn-secondary-custom {
+    @apply btn bg-secondary text-white border-none rounded-lg
+           hover:bg-[#004f7a] transition-colors duration-200;
+  }
+
+
+  /* ──────────────────────────────────────
+     4E. BADGES
+  ────────────────────────────────────── */
+
+  /* Category badge — soft green */
+  .badge-soft {
+    @apply badge border-none bg-[#dff5e8] text-primary text-xs font-semibold px-3 py-1 rounded-full;
+  }
+
+  /* Status: Ongoing */
+  .badge-ongoing {
+    @apply badge border-none bg-orange-100 text-orange-600 text-xs font-semibold px-3 py-1 rounded-full;
+  }
+
+  /* Status: Resolved */
+  .badge-resolved {
+    @apply badge border-none bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full;
+  }
+
+  /* Status: Verified */
+  .badge-verified {
+    @apply badge border-none bg-[#dff5e8] text-primary text-xs font-semibold px-3 py-1 rounded-full;
+  }
+
+  /* Generic category pill shown on image overlay */
+  .badge-overlay {
+    @apply absolute top-3 right-3 badge-soft shadow-sm;
+  }
+
+
+  /* ──────────────────────────────────────
+     4F. FORM INPUTS
+  ────────────────────────────────────── */
+
+  .input-custom {
+    @apply input border border-base-300 bg-white rounded-lg
+           focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20
+           placeholder:text-[#9ca3af] text-neutral w-full;
+  }
+
+  .textarea-custom {
+    @apply textarea border border-base-300 bg-white rounded-lg
+           focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20
+           placeholder:text-[#9ca3af] text-neutral w-full resize-none;
+  }
+
+  .select-custom {
+    @apply select border border-base-300 bg-white rounded-lg
+           focus:outline-none focus:border-primary text-neutral w-full;
+  }
+
+  .label-custom {
+    @apply text-sm font-semibold text-neutral mb-1 block;
+  }
+
+
+  /* ──────────────────────────────────────
+     4G. STAT / COUNTER TILES
+  ────────────────────────────────────── */
+
+  /* Used in the dark green stats banner */
+  .stat-tile {
+    @apply flex flex-col items-center gap-1 text-center;
+  }
+
+  .stat-number {
+    @apply text-4xl md:text-5xl font-extrabold text-primary-content leading-none;
+  }
+
+  .stat-label {
+    @apply text-sm font-semibold tracking-widest uppercase text-primary-content/70;
+  }
+
+
+  /* ──────────────────────────────────────
+     4H. NAVIGATION
+  ────────────────────────────────────── */
+
+  .navbar-custom {
+    @apply bg-white/90 backdrop-blur border-b border-base-300 sticky top-0 z-50;
+  }
+
+  .nav-link {
+    @apply text-sm font-semibold text-neutral hover:text-primary transition-colors duration-200 px-1 py-0.5;
+  }
+
+  .nav-link-active {
+    @apply text-primary border-b-2 border-primary pb-0.5;
+  }
+
+
+  /* ──────────────────────────────────────
+     4I. SIDEBAR (Dashboard)
+  ────────────────────────────────────── */
+
+  .sidebar {
+    @apply w-52 shrink-0 bg-base-100 border-r border-base-300 min-h-screen flex flex-col py-6 px-4 gap-1;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#404943]
+           hover:bg-base-200 hover:text-primary transition-all duration-200;
+  }
+
+  .sidebar-link-active {
+    @apply bg-primary text-white hover:bg-primary hover:text-white;
+  }
+
+
+  /* ──────────────────────────────────────
+     4J. TABLE (My Reports)
+  ────────────────────────────────────── */
+
+  .table-custom {
+    @apply w-full text-sm;
+  }
+
+  .table-custom thead tr {
+    @apply bg-base-200 text-[#667085] text-xs font-semibold uppercase tracking-wide;
+  }
+
+  .table-custom thead th {
+    @apply px-4 py-3 text-left;
+  }
+
+  .table-custom tbody tr {
+    @apply border-t border-base-300 hover:bg-base-100 transition-colors;
+  }
+
+  .table-custom tbody td {
+    @apply px-4 py-4 text-neutral;
+  }
+
+
+  /* ──────────────────────────────────────
+     4K. PROGRESS BAR (Contribution)
+  ────────────────────────────────────── */
+
+  .progress-custom {
+    @apply progress bg-base-300 h-2 rounded-full;
+  }
+
+  .progress-fill {
+    @apply bg-primary h-full rounded-full transition-all duration-500;
+  }
+
+
+  /* ──────────────────────────────────────
+     4L. GRIDS
+  ────────────────────────────────────── */
+
+  /* 3-col responsive card grid */
+  .grid-auto-fit {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  /* 4-col for category tiles */
+  .grid-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+
+  /* 2-col split layout */
+  .grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+  }
+
+
+  /* ──────────────────────────────────────
+     4M. MODALS / OVERLAYS
+  ────────────────────────────────────── */
+
+  .modal-card {
+    @apply bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl mx-auto;
+  }
+
+  .modal-title {
+    @apply text-2xl font-bold text-neutral mb-6;
+  }
+
+
+  /* ──────────────────────────────────────
+     4N. UTILITY HELPERS
+  ────────────────────────────────────── */
+
+  /* Icon + text inline row */
+  .icon-row {
+    @apply flex items-center gap-2 text-sm text-[#667085];
+  }
+
+  /* Divider line */
+  .divider-custom {
+    @apply border-t border-base-300 my-6;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb-item {
+    @apply text-sm text-[#667085] hover:text-primary transition-colors;
+  }
+
+  .breadcrumb-item-active {
+    @apply text-sm font-semibold text-neutral;
+  }
 }
