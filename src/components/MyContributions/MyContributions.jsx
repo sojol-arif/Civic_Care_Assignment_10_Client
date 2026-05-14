@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { use } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
 
 const MyContribute = () => {
+    // Dynamically set the document title
+    useDocumentTitle("My Contributions - Civic Care");
     const { user } = use(AuthContext);
     const [bids, setBids] = useState([]);
 
     const handleDeleteBid = (id) => {
-        
+
     }
 
     useEffect(() => {

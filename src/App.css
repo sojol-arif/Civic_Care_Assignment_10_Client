@@ -10,77 +10,153 @@
 @plugin "daisyui";
 
 
+
 /* ==========================================================
-   1. DAISYUI LIGHT THEME
+   2. DAISYUI LIGHT THEME
    ========================================================== */
 
 @plugin "daisyui/theme" {
   name: "light";
-  default: true;
 
+  --color-common: #95d4b3;
   /* ── Brand ── */
-  --color-primary:         #0f5238;   /* Forest Green — CTAs, active states */
-  --color-primary-content: #ffffff;
+  --color-primary: #2d6a4f;
+  /* bg-primary */
+  --color-primary-content: #a8e7c5;
+  /* text-primary-content */
 
-  --color-secondary:         #006399; /* Teal Blue — links, secondary buttons */
-  --color-secondary-content: #ffffff;
+  --color-secondary: #f2f4f0;
+  /* bg-secondary */
+  --color-secondary-content: #404943;
+  /* text-secondary-content */
 
-  --color-accent:         #d7efe4;    /* Mint tint — soft badge bg, highlights */
-  --color-accent-content: #0f5238;
+  --color-accent: #006399;
+  /* bg-accent */
+  --color-accent-content: #ffffff;
+  /* text-accent-content */
 
-  /* ── Backgrounds ── */
-  --color-base-100: #f8faf6;          /* Page background */
-  --color-base-200: #eef2ec;          /* Card / sidebar background */
-  --color-base-300: #dfe6dd;          /* Borders, dividers */
-
-  /* ── Text ── */
-  --color-neutral:         #1f2937;
+  --color-neutral: #0f5238;
+  /* bg-neutral */
   --color-neutral-content: #ffffff;
+  /* text-neutral-content */
 
-  /* ── Feedback ── */
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-error:   #dc2626;
-  --color-info:    #0ea5e9;
+  --color-base-100: #f8faf6;
+  /* Main background / body */
+  /* Page background */
+  --color-base-200: #e1e3df;
+  /* Footer bg color */
+  /* Card / sidebar background */
+  --color-base-300: #dfe6dd;
 
-  /* ── Shape ── */
-  --radius-box: 1rem;    /* cards, modals */
-  --radius-btn: 0.5rem;  /* buttons */
-  --border: 1px;
+  /*--- Color Text ---*/
+  --color-nav: #404943;
+  --color-text: #404943;
+  --color-heading: #191c1a;
+
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #38bdf8;
+
+  /* Btn Card */
+  --bg-card-btn: transparent;
+  --bg-card-btn-hover: #cde5ff;
+  --card-btn-border-color: #006399;
+  --btn-color: #006399;
+
+  /* Card Tag */
+  --card-tag-color: var(--color-heading);
+  --card-tag-border-color: #b1f0ce;
+  --card-tag-bg-color: #b1f0ceb0;
+  --card-tag-color: #002114;
+
+  /* Footer Border Top Color */
+  --color-footer-border: #bfc9c14d;
+
+  /* Category Card */
+  --color-border-category-each: #bfc9c1;
+
+  /* View All Color */
+  --link-view-all-color: #006399;
+
+  --color-header-bordar: #bfc9c1;
 }
 
 
+
 /* ==========================================================
-   2. DAISYUI DARK THEME
+   1. DAISYUI DARK THEME
    ========================================================== */
 
 @plugin "daisyui/theme" {
   name: "dark";
+  default: true;
 
-  --color-primary:         #3ddc84;
-  --color-primary-content: #062016;
+  --color-common: #95d4b3;
+  /* ── Brand ── */
+  --color-primary: #95d4b3;
+  /* bg-primary */
+  --color-primary-content: #a8e7c5;
+  /* text-primary-content */
 
-  --color-secondary:         #38bdf8;
-  --color-secondary-content: #001c2e;
+  --color-secondary: #201f1f;
+  /* bg-secondary */
+  --color-secondary-content: #bfc9c1;
+  /* text-secondary-content */
 
-  --color-accent:         #134d35;
-  --color-accent-content: #d7efe4;
+  --color-accent: #006443;
+  /* bg-accent */
+  --color-accent-content: #8cdeb4;
+  /* text-accent-content */
 
-  --color-base-100: #0f1a14;
-  --color-base-200: #162110;
+  --color-neutral: #131313;
+  /* bg-neutral */
+  --color-neutral-content: #e5e2e1;
+  /* text-neutral-content */
+
+  --color-footer: white;
+  /* Footer background color */
+  --color-footer: black;
+  /* Footer background color */
+
+  /* ── Backgrounds ── */
+  --color-base-100: #131313;
+  /* Main background / body */
+  --color-base-200: #131313;
+  /* Footer bg color */
   --color-base-300: #1f2d1c;
 
-  --color-neutral:         #e5e7eb;
-  --color-neutral-content: #0f1a14;
+  /* ── Text ── */
+  --color-nav: #bfc9c1;
+  --color-text: #bfc9c1;
+  --color-heading: #e5e2e1;
 
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-error:   #f87171;
-  --color-info:    #38bdf8;
+  /* ── Feedback ── */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #0ea5e9;
 
-  --radius-box: 1rem;
-  --radius-btn: 0.5rem;
-  --border: 1px;
+  /* Btn Card */
+  --bg-card-btn: #40494333;
+  --bg-card-btn-hover: #2d6a4f;
+  --card-btn-border-color: #404943;
+  --card-btn-color: var(--color-heading);
+
+  /* Card Tag */
+  --card-tag-color: var(--color-heading);
+  --card-tag-border-color: #95D4B333;
+  --card-tag-bg-color: #3b554959;
+  --card-tag-color: #95d4b3;
+
+  /* Footer Border Top Color */
+  --color-footer-border: #404943;
+
+  /* Category Card */
+  --color-border-category-each: #404943;
+
+  --link-view-all-color: #95d4b3;
+  --color-header-bordar: transparent;
 }
 
 
@@ -93,41 +169,184 @@
   /* ── Global body ── */
   body {
     font-family: "Open Sans", sans-serif;
-    color: #404943;
+    color: var(--color-text);
     background-color: var(--color-base-100);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
 
+  body,
+  .nav_header {
+
+    background-color: var(--color-base-100);
+  }
+
   /* ── Headings ── */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "Inter", sans-serif;
-    color: #101828;
+    color: var(--color-heading);
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
   }
 
   /* Scale */
-  h1 { @apply text-4xl md:text-6xl; }   /* Hero: 36–60px */
-  h2 { @apply text-3xl md:text-5xl; }   /* Section title: 30–48px */
-  h3 { @apply text-2xl md:text-3xl; }   /* Card title / Sub-section */
-  h4 { @apply text-xl md:text-2xl; }
-  h5 { @apply text-lg md:text-xl; }
-  h6 { @apply text-base md:text-lg; }
+  h1 {
+    @apply text-4xl md:text-6xl;
+  }
+
+  /* Hero: 36–60px */
+  h2 {
+    @apply text-3xl md:text-5xl;
+  }
+
+  /* Section title: 30–48px */
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  /* Card title / Sub-section */
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+  }
 
   /* Body copy */
-  p  { @apply text-base md:text-lg; }
+  p {
+    @apply text-base md:text-lg;
+  }
 
   /* Links */
   a {
-    color: var(--color-secondary);
     text-decoration: none;
     transition: color 0.2s;
   }
-  a:hover { color: var(--color-primary); }
 }
 
+/* ==========================================================
+   4. Custom CSS 
+   ========================================================== */
+/* Common Css */
+
+[data-theme="dark"] .issue_card {
+  border-color: transparent;
+  background-color: #201f1f;
+}
+
+.heading-font {
+  font-family: "Inter", sans-serif;
+}
+
+/* View All Link */
+.link-view-all-color {
+  color: var(--link-view-all-color) !important;
+  font-weight: 600;
+  transition: color 0.2s;
+  font-size: 14px;
+}
+
+/* Card CSS */
+.issue_card {
+  .card-tag {
+    border-color: var(--card-tag-border-color);
+    color: var(--card-tag-color);
+    background-color: var(--card-tag-bg-color);
+    color: var(--card-tag-color);
+    backdrop-filter: blur(12px);
+  }
+
+  .btn {
+    color: var(--card-btn-color);
+    border-color: var(--card-btn-border-color);
+    background-color: var(--bg-card-btn);
+    border: 1px solid var(--card-btn-border-color);
+    box-shadow: none;
+
+    &:hover {
+      background-color: var(--bg-card-btn-hover);
+    }
+  }
+}
+
+/* Navbar CSS */
+
+.navbar.main-container {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+nav li a.active {
+  color: var(--color-primary);
+}
+
+header.nav_header {
+  border-bottom: 1px solid var(--color-header-bordar);
+}
+
+/* Slider CSS */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff !important;
+}
+
+/* Footer CSS */
+.bottom_footer {
+  border-top: 1px solid var(--color-footer-border);
+}
+
+/* Category Cards */
+.category-card_custom {
+  @apply w-full border flex rounded-2xl p-6 flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1;
+}
+
+[data-theme="dark"] .category-card_custom {
+  border-color: rgb(64, 73, 67);
+  background-color: rgb(28, 27, 27);
+  .category-icon-box{
+    color: #95d4b3;
+    background-color: rgba(45, 106, 79, 0.2);
+  }
+  p{
+    color: rgb(191, 201, 193);
+  }
+}
+
+[data-theme="dark"] .category-card {
+  background-color: #1a2a1f;
+  border-color: transparent;
+}
+
+.category-card:hover {
+  border-color: var(--color-primary);
+}
+
+[data-theme="light"] .category-card_custom{
+  p{
+    color: var(--color-text) !important;
+  }
+}
+
+/* Icon box */
+
+[data-theme="light"] {
+  .category-card_custom{
+    border-color: #bfc9c1;
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-content)
+  }
+}
 
 /* ==========================================================
    4. COMPONENT LAYER — Reusable Class Utilities
@@ -141,7 +360,7 @@
 
   /* Max-width wrapper */
   .main-container {
-    @apply max-w-[1230px] mx-auto px-4 md:px-6;
+    @apply max-w-[1230px] mx-auto px-[24px];
   }
 
   /* Vertical section breathing room */
@@ -185,52 +404,22 @@
   }
 
 
-  /* ──────────────────────────────────────
-     4C. CARDS
-  ────────────────────────────────────── */
-
-  /* Standard white card */
+  /* ✅ FIX — use semantic colors */
   .custom-card {
-    @apply bg-white border border-base-300 rounded-3xl shadow-sm
-           hover:shadow-xl transition-all duration-300;
+    @apply bg-base-200 border border-base-300 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300;
   }
 
-  /* Soft green tinted card (accent bg) */
-  .accent-card {
-    @apply bg-accent border border-accent rounded-3xl shadow-sm
-           hover:shadow-md transition-all duration-300;
+  .input-custom {
+    @apply input border border-base-300 bg-base-200 rounded-lg focus:outline-none focus:border-primary placeholder:text-base-content/40 text-base-content w-full;
   }
 
-  /* Dark brand card (used in "Join Clean Drive" section) */
-  .dark-brand-card {
-    @apply bg-primary text-primary-content rounded-3xl p-8 md:p-12;
+  .modal-card {
+    @apply bg-base-100 rounded-3xl shadow-2xl p-8 w-full max-w-2xl mx-auto;
   }
 
-  /* Issue card (image on top, content below) */
-  .issue-card {
-    @apply overflow-hidden flex flex-col;
+  .navbar-custom {
+    @apply bg-base-100/90 backdrop-blur border-b border-base-300 sticky top-0 z-50;
   }
-
-  .issue-card-image {
-    @apply w-full h-48 object-cover;
-  }
-
-  .issue-card-body {
-    @apply p-5 flex flex-col gap-3 flex-1;
-  }
-
-  .issue-card-title {
-    @apply text-lg font-bold text-neutral leading-snug;
-  }
-
-  .issue-card-desc {
-    @apply text-sm text-[#667085] line-clamp-2 flex-1;
-  }
-
-  .issue-card-footer {
-    @apply flex items-center gap-1 text-sm text-[#667085] mt-1;
-  }
-
 
   /* ──────────────────────────────────────
      4D. BUTTONS
@@ -238,14 +427,12 @@
 
   /* Filled green — primary CTA */
   .btn-primary-custom {
-    @apply btn bg-primary text-white border-none rounded-lg
-           hover:bg-[#0b3f2b] transition-colors duration-200;
+    @apply btn bg-primary text-white border-none rounded-lg hover:bg-[#0b3f2b] transition-colors duration-200;
   }
 
   /* Outlined green */
   .btn-outline-custom {
-    @apply btn btn-outline border-primary text-primary rounded-lg
-           hover:bg-primary hover:text-white transition-colors duration-200;
+    @apply btn btn-outline border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200;
   }
 
   /* Ghost / text link style */
@@ -255,8 +442,7 @@
 
   /* Secondary blue button */
   .btn-secondary-custom {
-    @apply btn bg-secondary text-white border-none rounded-lg
-           hover:bg-[#004f7a] transition-colors duration-200;
+    @apply btn bg-secondary text-white border-none rounded-lg hover:bg-[#004f7a] transition-colors duration-200;
   }
 
 
@@ -295,20 +481,15 @@
   ────────────────────────────────────── */
 
   .input-custom {
-    @apply input border border-base-300 bg-white rounded-lg
-           focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20
-           placeholder:text-[#9ca3af] text-neutral w-full;
+    @apply input border border-base-300 bg-white rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 placeholder:text-[#9ca3af] text-neutral w-full;
   }
 
   .textarea-custom {
-    @apply textarea border border-base-300 bg-white rounded-lg
-           focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20
-           placeholder:text-[#9ca3af] text-neutral w-full resize-none;
+    @apply textarea border border-base-300 bg-white rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 placeholder:text-[#9ca3af] text-neutral w-full resize-none;
   }
 
   .select-custom {
-    @apply select border border-base-300 bg-white rounded-lg
-           focus:outline-none focus:border-primary text-neutral w-full;
+    @apply select border border-base-300 bg-white rounded-lg focus:outline-none focus:border-primary text-neutral w-full;
   }
 
   .label-custom {
@@ -360,8 +541,7 @@
   }
 
   .sidebar-link {
-    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#404943]
-           hover:bg-base-200 hover:text-primary transition-all duration-200;
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#404943] hover:bg-base-200 hover:text-primary transition-all duration-200;
   }
 
   .sidebar-link-active {

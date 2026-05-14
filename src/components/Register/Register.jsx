@@ -1,8 +1,11 @@
 import { AuthContext } from '../../contexts/AuthContext';
 import { use } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
 
 const Register = () => {
+    // Dynamically set the document title
+    useDocumentTitle("Register - Civic Care");
 
     const { signInWithGoogle } = use(AuthContext);
 
@@ -25,10 +28,10 @@ const Register = () => {
                     },
                     body: JSON.stringify(newUser)
                 })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data, 'user data from google sign in');
-                });
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data, 'user data from google sign in');
+                    });
             }).catch((error) => {
                 console.log(error, 'error from google sign in');
             });

@@ -1,8 +1,12 @@
 import { use } from 'react';
 import { Link } from 'react-router';
 import IssueCard from '../IssueCard/IssueCard';
+import { useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
 
 const RecentIssues = ({ usePromiseRecentIssues }) => {
+    // Dynamically set the document title
+    useDocumentTitle("Recent Issues - Civic Care");
+
     const recentIssues = use(usePromiseRecentIssues);
     console.log(recentIssues, 'recentIssues');
 
@@ -14,7 +18,7 @@ const RecentIssues = ({ usePromiseRecentIssues }) => {
                     <p>Real-time updates from your community stewards.</p>
                 </div>
                 <div>
-                    <Link to="/issues" className='text-secondary'>View All Reports</Link>
+                    <Link to="/allIssues" className='link-view-all-color'>View All Reports →</Link>
                 </div>
             </div>
             <div className='grid-auto-fit'>
