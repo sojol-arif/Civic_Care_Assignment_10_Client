@@ -8,10 +8,10 @@ import './App.css'
 import AllIssues from './components/AllIssues/AllIssues';
 import AuthProvider from './contexts/AuthProvider';
 import Register from './components/Register/Register';
-import AddIssue from './components/AddIssue/AddIssue';
 import MyIssues from './components/MyIssues/MyIssues';
 import MyContributions from './components/MyContributions/MyContributions';
 import IssueDetails from './components/IssueDetails/IssueDetails';
+import Login from './components/Login/Login';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "allIssues",
+        loader: () => fetch('http://localhost:3000/issues'),
         Component: AllIssues,
       },
       {
@@ -31,8 +32,8 @@ const router = createBrowserRouter([
         Component: Register,
       },
       {
-        path: "addIssue",
-        Component: AddIssue,
+        path: "login",
+        Component: Login,
       },
       {
         path: "myIssues",

@@ -19,14 +19,13 @@ const Footer = () => {
     return (
         <footer className="bg-base-200 mt-14 md:mt-20">
             <div className="main-container py-16">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div className="flex flex-col gap-4">
-                        <h3
-                            className="text-xl font-bold heading-font">
+                <div className="flex flex-col md:flex-row gap-12">
+                    {/* Left — Brand (takes remaining space) */}
+                    <div className="flex flex-col gap-4 md:flex-1">
+                        <h3 className="text-xl font-bold heading-font">
                             CivicCare
                         </h3>
-                        <p
-                            className="text-sm leading-relaxed max-w-xs">
+                        <p className="text-sm leading-relaxed max-w-xs">
                             Empowering citizens to take charge of their environment.
                             CivicCare is a digital bridge between community needs and
                             administrative actions, fostering a cleaner, safer world for
@@ -35,52 +34,43 @@ const Footer = () => {
 
                         {/* Social Icons */}
                         <div className="flex items-center gap-4 mt-2">
-                            <FaMedal
-                                className="text-xl cursor-pointer hover:text-primary transition-colors"
-                            />
-                            <FaGlobe
-                                className="text-xl cursor-pointer hover:text-primary transition-colors"
-                            />
-                            <FaEnvelope
-                                className="text-xl cursor-pointer hover:text-primary transition-colors"
-                            />
+                            <FaMedal className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <FaGlobe className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <FaEnvelope className="text-xl cursor-pointer hover:text-primary transition-colors" />
                         </div>
                     </div>
 
-                    {/* Middle — Useful Links */}
-                    <div className="flex flex-col gap-4">
-                        <h6
-                            className="text-xs font-bold tracking-widest uppercase heading-font"
-                        >
-                            Useful Links
-                        </h6>
-                        <ul className="flex flex-col gap-3">
-                            {links}
-                        </ul>
-                    </div>
+                    {/* Right 2 sections — compact width */}
+                    <div className="flex flex-row gap-10 md:gap-16 md:shrink-0">
+                        {/* Middle — Useful Links */}
+                        <div className="flex flex-col gap-4">
+                            <h6 className="text-xs font-bold tracking-widest uppercase heading-font">
+                                Useful Links
+                            </h6>
+                            <ul className="flex flex-col gap-3">
+                                {links}
+                            </ul>
+                        </div>
 
-                    {/* Right — Support */}
-                    <div className="flex flex-col gap-4">
-                        <h6
-                            className="text-xs font-bold tracking-widest uppercase heading-font">
-                            Support
-                        </h6>
-                        <ul className="flex flex-col gap-3">
-                            {links2}
-                        </ul>
+                        {/* Right — Support */}
+                        <div className="flex flex-col gap-4">
+                            <h6 className="text-xs font-bold tracking-widest uppercase heading-font">
+                                Support
+                            </h6>
+                            <ul className="flex flex-col gap-4">
+                                {links2}
+                            </ul>
+                        </div>
                     </div>
-
                 </div>
             </div>
 
             {/* Bottom Bar */}
-            <div
-                className="bottom_footer py-6">
+            <div className="bottom_footer py-6">
                 <p className="text-center text-sm">
                     © 2024 CivicCare Portal. All rights reserved. Built for community stewardship.
                 </p>
             </div>
-
         </footer>
     );
 };

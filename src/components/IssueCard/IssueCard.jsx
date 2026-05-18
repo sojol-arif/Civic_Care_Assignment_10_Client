@@ -7,7 +7,7 @@ const IssueCard = ({ issue }) => {
     const { _id, title, description, image, category, location } = issue;
     return (
         <SlideUp>
-            <div key={_id} className='issue_card rounded-[12px] overflow-hidden border border-[#bfc9c1] hover:translate-y-[-4px] transition-all duration-300 relative'>
+            <div key={_id} className='issue_card rounded-[12px] overflow-hidden border border-[#bfc9c1] hover:translate-y-[-4px] hover:shadow-lg transition-all duration-300 relative'>
                 <div >
                     <div>
                         <img className='max-h-[192px] w-full object-cover' src={image} alt={title} />

@@ -18,20 +18,19 @@
 @plugin "daisyui/theme" {
   name: "light";
 
-  --color-common: #95d4b3;
   /* ── Brand ── */
   --color-primary: #2d6a4f;
-  /* bg-primary */
+  /* bg-primary, text-primary, border-primary, etc [--color-primary:red] */
   --color-primary-content: #a8e7c5;
   /* text-primary-content */
 
   --color-secondary: #f2f4f0;
-  /* bg-secondary */
+  /* bg-secondary, [--color-primary:red]  */
   --color-secondary-content: #404943;
-  /* text-secondary-content */
+  /* [--color-secondary-content:green], text-secondary-content */
 
   --color-accent: #006399;
-  /* bg-accent */
+  /* bg-accent, We can set any color by: [--color-secondary-content:green] */
   --color-accent-content: #ffffff;
   /* text-accent-content */
 
@@ -80,7 +79,16 @@
   --link-view-all-color: #006399;
 
   --color-header-bordar: #bfc9c1;
+  --color-common: #95d4b3;
 }
+
+
+/* ==================      class=" [--color-primary:red]   "====================
+ class=" [--color-primary:red]   "
+
+<div className="category-icon-box max-w-max bg-primary/20  [--color-primary:red] inline-flex items-center justify-center rounded p-2"><span className="text-xl">{cat.icon}</span></div>   
+        
+   ========================================================== */
 
 
 
@@ -92,7 +100,6 @@
   name: "dark";
   default: true;
 
-  --color-common: #95d4b3;
   /* ── Brand ── */
   --color-primary: #95d4b3;
   /* bg-primary */
@@ -113,11 +120,6 @@
   /* bg-neutral */
   --color-neutral-content: #e5e2e1;
   /* text-neutral-content */
-
-  --color-footer: white;
-  /* Footer background color */
-  --color-footer: black;
-  /* Footer background color */
 
   /* ── Backgrounds ── */
   --color-base-100: #131313;
@@ -157,6 +159,8 @@
 
   --link-view-all-color: #95d4b3;
   --color-header-bordar: transparent;
+
+  --color-common: #95d4b3;
 }
 
 
@@ -287,12 +291,18 @@
   padding-right: 24px;
 }
 
-nav li a.active {
+nav li a.active:not(.register) {
   color: var(--color-primary);
 }
 
 header.nav_header {
   border-bottom: 1px solid var(--color-header-bordar);
+}
+
+[data-theme="dark"] {
+  header.nav_header {
+    background-color: #201f1f;
+  }
 }
 
 /* Slider CSS */
@@ -314,11 +324,13 @@ header.nav_header {
 [data-theme="dark"] .category-card_custom {
   border-color: rgb(64, 73, 67);
   background-color: rgb(28, 27, 27);
-  .category-icon-box{
+
+  .category-icon-box {
     color: #95d4b3;
     background-color: rgba(45, 106, 79, 0.2);
   }
-  p{
+
+  p {
     color: rgb(191, 201, 193);
   }
 }
@@ -332,8 +344,8 @@ header.nav_header {
   border-color: var(--color-primary);
 }
 
-[data-theme="light"] .category-card_custom{
-  p{
+[data-theme="light"] .category-card_custom {
+  p {
     color: var(--color-text) !important;
   }
 }
@@ -341,10 +353,38 @@ header.nav_header {
 /* Icon box */
 
 [data-theme="light"] {
-  .category-card_custom{
+  .category-card_custom {
     border-color: #bfc9c1;
     background-color: var(--color-secondary);
     color: var(--color-secondary-content)
+  }
+}
+
+/* Login Register Page */
+[data-theme="light"] .sign_in{
+  background-color: #fff;
+}
+
+/* Issue details */
+.input {
+  width: 100%;
+}
+
+[data-theme='dark'] .modal-box{
+  background-color: rgb(14, 14, 14);
+  box-shadow: 0 0 1px 1px rgba(200,200,200, .8);
+  h2,h3,h4{
+    color: #e5e2e1;
+  }
+  input{
+    background-color: rgba(64, 73, 67, .1);
+  }
+  label{
+    color: #bfc9c1;
+  }
+  .submit_btn{
+    background-color: rgb(45, 106, 79);
+    color: rgb(168, 231, 197);
   }
 }
 
@@ -365,7 +405,7 @@ header.nav_header {
 
   /* Vertical section breathing room */
   .section-space {
-    @apply py-16 md:py-24;
+    @apply py-12 md:py-20;
   }
 
   /* Tighter section variant */

@@ -6,7 +6,7 @@ import ThemeToggle from '../../hooks/ThemeToggle/ThemeToggle';
 import Loading from '../Loading/Loading';
 
 const Navbar = () => {
-    const { user, signOutLogUser } = use(AuthContext);
+    const { user, signOutLogUser, loading } = use(AuthContext);
     console.log('User from navbar', user);
 
     const signOutLogin = () => {
@@ -22,14 +22,13 @@ const Navbar = () => {
         <li><NavLink to="/" className="color-nav">Home</NavLink></li>
         <li><NavLink to="/allIssues" className="color-nav">All Issues</NavLink></li>
 
-        {user? 
+        {user ?
             (
                 <>
-                    <li><NavLink to="/addIssue" className="color-nav">Add Issue</NavLink></li>
                     <li><NavLink to="/myIssues" className="color-nav">My Issues</NavLink></li>
                     <li><NavLink to="/myContributions" className="color-nav">My Contributions</NavLink></li>
                     <li>
-                        <button onClick={signOutLogin} className="btn btn-accent text-accent-content">
+                        <button onClick={signOutLogin} className="btn btn-accent text-accent-content ml-2">
                             Sign Out
                         </button>
                     </li>
@@ -38,7 +37,7 @@ const Navbar = () => {
             :
             (
                 <li>
-                    <NavLink to="/register" className="btn btn-primary">
+                    <NavLink to="/register" className="btn btn-accent register rounded-2xl ml-2">
                         Register
                     </NavLink>
                 </li>
@@ -65,7 +64,12 @@ const Navbar = () => {
                 </div>
                 <nav className="navbar-center hidden lg:flex justify-end grow">
                     <ul className="menu menu-horizontal px-1">
-                            {links} 
+                        {loading ?
+                            <Loading></Loading>
+                            :
+                             links 
+                        }
+
                     </ul>
                 </nav>
             </div>

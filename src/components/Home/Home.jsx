@@ -17,7 +17,6 @@ const Home = () => {
             <CategorySection></CategorySection> 
             <RecentIssues usePromiseRecentIssues={usePromiseRecentIssues} ></RecentIssues>
             <CallToAction></CallToAction>
-            <Footer></Footer>
         </div>
     );
 };
