@@ -9,9 +9,9 @@ const MyContribute = () => {
     const { user } = use(AuthContext);
     const [bids, setBids] = useState([]);
 
-    const handleDeleteBid = (id) => {
+    // const handleDeleteBid = (id) => {
 
-    }
+    // }
 
     useEffect(() => {
         console.log(user);
@@ -35,7 +35,7 @@ const MyContribute = () => {
         <div className='max-w-[1200px] mx-auto py-13 md:py-20'>
             <div>
                 <div className="overflow-x-auto">
-                    <h3>Bid for this product: {bids.length}</h3>
+                    <h2>Bid for this product: {bids.length}</h2>
                     <table className="table">
                         <thead>
                             <tr>

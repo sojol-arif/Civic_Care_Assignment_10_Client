@@ -18,7 +18,7 @@ const RecentIssues = ({ usePromiseRecentIssues }) => {
         <div className='main-container'>
             <div className='flex justify-between items-center mb-4'>
                 <div>
-                    <h3>Recent Reports</h3>
+                    <h2>Recent Reports</h2>
                     <p>Real-time updates from your community stewards.</p>
                 </div>
                 <div>

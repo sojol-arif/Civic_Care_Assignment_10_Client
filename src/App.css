@@ -126,7 +126,7 @@
   /* Main background / body */
   --color-base-200: #131313;
   /* Footer bg color */
-  --color-base-300: #1f2d1c;
+  --color-base-300: #353534;
 
   /* ── Text ── */
   --color-nav: #bfc9c1;
@@ -206,17 +206,17 @@
 
   /* Hero: 36–60px */
   h2 {
-    @apply text-3xl md:text-5xl;
+    @apply text-2xl md:text-[32px];
   }
 
   /* Section title: 30–48px */
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-xl md:text-2xl;
   }
 
   /* Card title / Sub-section */
   h4 {
-    @apply text-xl md:text-2xl;
+    @apply text-lg md:text-xl;
   }
 
   h5 {
@@ -386,6 +386,12 @@ header.nav_header {
     background-color: rgb(45, 106, 79);
     color: rgb(168, 231, 197);
   }
+}
+
+.table_issue_contribute tr th{
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-text) !important;
 }
 
 /* ==========================================================

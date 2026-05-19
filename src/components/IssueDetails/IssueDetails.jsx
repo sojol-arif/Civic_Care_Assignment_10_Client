@@ -7,7 +7,10 @@ import { MdMap } from "react-icons/md";
 import { FiEye } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
 import { FaInfoCircle, FaCog } from "react-icons/fa";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { use } from "react";
+import { AuthContext } from '../../contexts/AuthContext';
+import Swal from 'sweetalert2'
 
 const IssueDetails = () => {
     // Dynamically set the document title
@@ -18,12 +21,71 @@ const IssueDetails = () => {
     const contributions = [];
     const bidModalRef = useRef(null);
 
+    /* User */
+    const { _id: issueId } = useLoaderData();
+    console.log(issueId, "_id from useLoaderData()");
+    const { user } = use(AuthContext);
+    console.log(user, 'issueDetails User');
+    const [contributes, setContributes] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/issues/contribute/${issueId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log('Contribute for this product', data);
+                setContributes(data);
+            })
+    }, [issueId]);
+
+    console.log(contributes, 'Contributes');
+
     const totalCollected = contributions?.reduce((sum, c) => sum + c.amount, 0) || 270;
     const target = issue.amount;
     const pct = Math.min(Math.round((totalCollected / target) * 100), 100);
 
-    const handleSubmit = () => {
-        console.log('form submitted');
+    const handleContributeSubmit = (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const contribute = e.target.contribute.value;
+        const phone = e.target.phone.value;
+        const address = e.target.address.value;
+        const additional = e.target.additonal.value;
+        console.log(name, email, contribute);
+
+        const newContribute = {
+            issueId: issueId,
+            amount: contribute,
+            name: name,
+            email: email,
+            phone: phone,
+            address: address,
+            additionalInfo: additional,
+        }
+
+        fetch('http://localhost:3000/contributes', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newContribute)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data, 'after submit contribute form');
+                if (data.insertedId) {
+                    bidModalRef.current.close();
+
+                    /* Sweet Alert */
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your Contribute has been placed",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
     }
 
     const handleBidModalOpen = () => {
@@ -92,7 +154,7 @@ const IssueDetails = () => {
                         </div>
 
                         {/* Title */}
-                        <h1 className="text-3xl md:text-4xl font-extrabold mb-3 heading-font"
+                        <h1 className="text-2xl md:text-[32px] font-extrabold mb-3 heading-font"
                         >
                             {issue.title}
                         </h1>
@@ -117,10 +179,10 @@ const IssueDetails = () => {
                         <div className="border-t border-base-300 mb-6" />
 
                         {/* Description */}
-                        <h2 className="text-xl font-bold mb-3 heading-font"
+                        <h3 className="text-xl font-bold mb-3 heading-font"
                         >
                             Description
-                        </h2>
+                        </h3>
                         <p className="text-base leading-relaxed"
                         >
                             {issue.description}
@@ -139,7 +201,7 @@ const IssueDetails = () => {
                                 <p className="text-sm mb-1">
                                     Suggested Fix Budget
                                 </p>
-                                <p className="text-4xl font-extrabold heading-font">
+                                <p className="text-5xl font-extrabold text-primary">
                                     ${target.toFixed(2)}
                                 </p>
                             </div>
@@ -179,7 +241,7 @@ const IssueDetails = () => {
                                 <div className="modal-box bg-neutral-content">
                                     <h3 className="font-bold text-lg">Contribute to this Repair</h3>
                                     <div className="modal-action">
-                                        <form method="dialog" className='w-full' onSubmit={handleSubmit}>
+                                        <form method="dialog" className='w-full' onSubmit={handleContributeSubmit}>
 
                                             <fieldset className="fieldset">
                                                 {/* Issue Title */}
@@ -187,19 +249,22 @@ const IssueDetails = () => {
                                                 <input type="text" className="input bg-secondary" name="title" placeholder="Broken Streetlight on 5th Avenue" />
                                                 {/* Contribution Amount */}
                                                 <label className="label">Contribution Amount ($)</label>
-                                                <input type="text" name="amount" className="input bg-secondary" placeholder="25.00" />
+                                                <input type="text" name="contribute" className="input bg-secondary" placeholder="25.00" />
                                                 {/* Bid */}
                                                 <label className="label">Full Name</label>
-                                                <input type="text" className="input bg-secondary" name='name' placeholder="John Doe" />
+                                                <input type="text" className="input bg-secondary" name='name' placeholder="John Doe" defaultValue={user?.displayName} readOnly />
                                                 {/* Email */}
                                                 <label className="label">Issue Title</label>
-                                                <input type="email" className="input bg-secondary" name="email" placeholder="john@example.com" />
+                                                <input type="email" className="input bg-secondary" name="email" placeholder="john@example.com" defaultValue={user?.email} readOnly />
                                                 {/* Phone Number */}
-                                                <label className="label">Full Name</label>
+                                                <label className="label">Phone</label>
                                                 <input type="phone" className="input bg-secondary" name='phone' placeholder="+1 (555) 000-0000" />
                                                 {/* Billing Address */}
                                                 <label className="label">Billing Address</label>
                                                 <input type="text" className="input bg-secondary" name='address' placeholder="123 Civic St, Metro City, 10001" />
+                                                {/* Additional Info */}
+                                                <label className="label">Additional Info</label>
+                                                <textarea type="text" className="input bg-secondary" name='additonal' placeholder="AdditionalThe sewage overflow...." />
                                                 <button className="btn btn-neutral mt-4 submit_btn"> Confirm Secure Payment</button>
                                             </fieldset>
 
@@ -242,9 +307,9 @@ const IssueDetails = () => {
                             </div>
 
                             <div className="flex items-start gap-3">
-                                <div className="w-9 h-9 rounded-full bg-accent/10
+                                <div className="w-9 h-9 rounded-full bg-primary/10
                           flex items-center justify-center shrink-0">
-                                    <FaCog className="text-accent text-sm" />
+                                    <FaCog className="text-primary text-sm" />
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold"
@@ -259,6 +324,56 @@ const IssueDetails = () => {
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                {/* Contribute Table */}
+                <div className="section-space pb-0">
+                    <h2 className="mb-6">Community Contributors</h2>
+                    <div className="overflow-x-auto rounded-box border border-primary/20 bg-base-100">
+                        <table className="table table_issue_contribute w-full">
+                            {/* head */}
+                            <thead>
+                                <tr className="bg-secondary/90">
+                                    <th className="border-primary/20">Name</th>
+                                    <th className="border-primary/20">Date</th>
+                                    <th className="border-primary/20">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {contributes.map(contribute =>
+                                    <tr>
+                                        <td className="border-primary/20">
+                                            <div className="flex items-center gap-3">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle h-12 w-12">
+                                                        <img
+                                                            src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                                                            alt="Avatar Tailwind CSS Component" />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold">{contribute.name}</div>
+                                                    <div className="text-sm opacity-50">{contribute.address}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="border-primary/20">
+                                            <div>
+                                                {new Date(contribute.date).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                })}
+                                            </div>
+                                        </td>
+                                        <td className="border-primary/20">
+                                            <div className="text-[22px] font-bold text-primary">${contribute.amount}</div>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
