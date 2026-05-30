@@ -1,6 +1,8 @@
 import { Link } from "react-router";
-import { FaMedal, FaGlobe, FaEnvelope } from "react-icons/fa";
-
+import { FaXTwitter } from "react-icons/fa6";
+import { FiFacebook } from "react-icons/fi";
+import { AiOutlineYoutube } from "react-icons/ai";
+import { FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
     const links = <>
@@ -34,9 +36,10 @@ const Footer = () => {
 
                         {/* Social Icons */}
                         <div className="flex items-center gap-4 mt-2">
-                            <FaMedal className="text-xl cursor-pointer hover:text-primary transition-colors" />
-                            <FaGlobe className="text-xl cursor-pointer hover:text-primary transition-colors" />
-                            <FaEnvelope className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <FaXTwitter className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <FiFacebook className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <AiOutlineYoutube className="text-xl cursor-pointer hover:text-primary transition-colors" />
+                            <FaInstagram className="text-xl cursor-pointer hover:text-primary transition-colors" />                            
                         </div>
                     </div>
 
