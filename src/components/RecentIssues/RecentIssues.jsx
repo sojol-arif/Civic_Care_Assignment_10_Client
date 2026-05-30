@@ -1,8 +1,16 @@
 import { use } from 'react';
 import { Link } from 'react-router';
 import IssueCard from '../IssueCard/IssueCard';
+import { useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
+import { AuthContext } from '../../contexts/AuthContext';
+import Loading from '../Loading/Loading';
 
 const RecentIssues = ({ usePromiseRecentIssues }) => {
+    // Dynamically set the document title
+    useDocumentTitle("Recent Issues - Civic Care");
+
+    const { loading } = use(AuthContext);
+
     const recentIssues = use(usePromiseRecentIssues);
     console.log(recentIssues, 'recentIssues');
 
@@ -10,17 +18,19 @@ const RecentIssues = ({ usePromiseRecentIssues }) => {
         <div className='main-container'>
             <div className='flex justify-between items-center mb-4'>
                 <div>
-                    <h3>Recent Reports</h3>
+                    <h2>Recent Reports</h2>
                     <p>Real-time updates from your community stewards.</p>
                 </div>
                 <div>
-                    <Link to="/issues" className='text-secondary'>View All Reports</Link>
+                    <Link to="/allIssues" className='link-view-all-color'>View All Reports →</Link>
                 </div>
             </div>
-            <div className='grid-auto-fit'>
-                {
+            <div className='grid-auto-fit mt-8 lg:mt-12'>
+                {loading ?
+                    <Loading></Loading>
+                    :
                     recentIssues.map(issue =>
-                        <IssueCard key={issue._id} issue={issue} ></IssueCard>
+                    <IssueCard key={issue._id} issue={issue} ></IssueCard>
                     )
                 }
             </div>

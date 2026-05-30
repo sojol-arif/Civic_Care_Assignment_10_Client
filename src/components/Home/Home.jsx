@@ -1,5 +1,9 @@
 import RecentIssues from '../RecentIssues/RecentIssues';
 import {useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
+import Footer from '../Footer/Footer';
+import Banner from '../Banner/Banner';
+import CategorySection from '../CategorySection/CategorySection';
+import CallToAction from '../CallToAction/CallToAction';
 
 const usePromiseRecentIssues = fetch('http://localhost:3000/recent-issues').then(res => res.json());
 
@@ -9,10 +13,10 @@ const Home = () => {
 
     return (
         <div>
-            <div className='main-container'>
-                <h3>Welcome to Civic Care! Home page</h3>
-            </div>
+            <Banner></Banner>
+            <CategorySection></CategorySection> 
             <RecentIssues usePromiseRecentIssues={usePromiseRecentIssues} ></RecentIssues>
+            <CallToAction></CallToAction>
         </div>
     );
 };

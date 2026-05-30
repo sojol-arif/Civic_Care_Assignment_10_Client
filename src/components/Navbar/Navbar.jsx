@@ -2,10 +2,11 @@ import { NavLink } from 'react-router';
 import { Link } from 'react-router';
 import { use } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import ThemeToggle from '../../hooks/ThemeToggle/ThemeToggle';
+import Loading from '../Loading/Loading';
 
 const Navbar = () => {
-    const { user, signOutLogUser } = use(AuthContext);
-    console.log('User from navbar', user);
+    const { user, signOutLogUser, loading } = use(AuthContext);
 
     const signOutLogin = () => {
         signOutLogUser().then(() => {
@@ -17,28 +18,38 @@ const Navbar = () => {
     }
 
     const links = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/allIssues">All Issues</NavLink></li>
-        
-        { user?.uid? <>
-            <li><NavLink to="/addIssue">Add Issue</NavLink></li>
-            <li><NavLink to="/myIssues">My Issues</NavLink></li>
-            <li><NavLink to="/myContributions"> My Contributions</NavLink></li>
-            <li><div>
-                <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"></path></g></svg>
-                
-            </div></li>
-            <button onClick={signOutLogin} className="btn">Sign Out</button>
-        </>:
-        <li><NavLink to="/register" className="btn-primary btn">Register</NavLink></li>}
+        <li><NavLink to="/" className="color-nav">Home</NavLink></li>
+        <li><NavLink to="/allIssues" className="color-nav">All Issues</NavLink></li>
+
+        {user ?
+            (
+                <>
+                    <li><NavLink to="/myIssues" className="color-nav">My Issues</NavLink></li>
+                    <li><NavLink to="/myContributions" className="color-nav">My Contributions</NavLink></li>
+                    <li>
+                        <button onClick={signOutLogin} className="btn btn-accent text-accent-content ml-2">
+                            Sign Out
+                        </button>
+                    </li>
+                </>
+            )
+            :
+            (
+                <li>
+                    <NavLink to="/register" className="btn btn-accent register rounded-2xl ml-2">
+                        Register
+                    </NavLink>
+                </li>
+            )
+        }
     </>
 
     return (
-        <header>
+        <header className='nav_header sticky top-0 z-[9999]'>
             <div className="navbar main-container">
-                <div className="navbar-start">
-                    <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                <div className="navbar-start w-full">
+                    <div className="dropdown mr-2 md:mr-0">
+                        <div tabIndex={0} role="button" className="btn btn-secondary lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
                         </div>
                         <nav
@@ -47,13 +58,19 @@ const Navbar = () => {
                             {links}
                         </nav>
                     </div>
-                    <Link to="/" className="btn btn-ghost text-xl">Civic Care</Link>
+                    <Link to="/" className="text-xl text-primary mr-2 font-black heading-font">Civic Care </Link>
+                    <ThemeToggle></ThemeToggle>
                 </div>
-                <div className="navbar-center hidden lg:flex justify-end grow">
-                    <nav className="menu menu-horizontal px-1">
-                        {links}
-                    </nav>
-                </div>
+                <nav className="navbar-center hidden lg:flex justify-end grow">
+                    <ul className="menu menu-horizontal px-1">
+                        {loading ?
+                            <Loading></Loading>
+                            :
+                             links 
+                        }
+
+                    </ul>
+                </nav>
             </div>
         </header>
     );
