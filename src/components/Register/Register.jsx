@@ -112,7 +112,7 @@ const Register = () => {
                                 </label>
                                 <Link
                                     to="/forgot-password"
-                                    className="text-sm font-semibold text-accent
+                                    className="text-sm font-semibold text-nuetral
                              hover:opacity-80 transition-colors"
                                 >
                                     Forgot Password?
@@ -147,7 +147,7 @@ const Register = () => {
                             <input
                                 type="checkbox"
                                 className="checkbox checkbox-sm border-base-300
-                           checked:bg-primary checked:border-primary"
+                           checked:bg-secondary checked:border-primary"
                             />
                             <span className="text-sm">
                                 Remember this device
@@ -193,13 +193,13 @@ const Register = () => {
 
                 {/* Register link */}
                 <p className="text-center text-sm mt-10">
-                    Don't have an account?{" "}
+                    Already have an account?{" "}
                     <Link
-                        to="/register"
+                        to="/login"
                         className="font-bold"
                         
                     >
-                        Register here
+                        Sign In
                     </Link>
                 </p>
 

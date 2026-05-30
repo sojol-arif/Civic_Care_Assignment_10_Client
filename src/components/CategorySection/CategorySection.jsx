@@ -8,35 +8,35 @@ const categories = [
         id: 1,
         icon: <FaTrash />,
         name: "Garbage",
-        pending: 124,
+        ongoing: 124,
         to: "/issues?category=garbage",
     },
     {
         id: 2,
         icon: <FaRoad />,
         name: "Road Damage",
-        pending: 89,
+        ongoing: 89,
         to: "/issues?category=road-damage",
     },
     {
         id: 3,
         icon: <FaLightbulb />,
         name: "Street Lights",
-        pending: 42,
+        ongoing: 42,
         to: "/issues?category=street-lights",
     },
     {
         id: 4,
         icon: <FaTint />,
         name: "Leaking Pipes",
-        pending: 15,
+        ongoing: 15,
         to: "/issues?category=leaking-pipes",
     },
     {
         id: 5,
         icon: <FaTree />,
         name: "Public Parks",
-        pending: 31,
+        ongoing: 31,
         to: "/issues?category=public-parks",
     },
 ];
@@ -96,7 +96,7 @@ const CategorySection = () => {
                                         {cat.name}
                                     </h3>
                                     <p className="text-sm font-[12px]">
-                                        {cat.pending} Pending
+                                        {cat.ongoing} ongoing
                                     </p>
                                 </div>
 

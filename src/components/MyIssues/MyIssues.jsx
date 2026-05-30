@@ -95,7 +95,7 @@ const MyIssues = () => {
                     </thead>
                     <tbody>
                         {issues.map((issue, index) =>
-                            <tr key={index}>
+                            <tr key={index} className="bg-secondary/90">
                                 <td className="border-primary/20">
                                     <div>{issue.title}</div>
                                 </td>
@@ -112,7 +112,15 @@ const MyIssues = () => {
                                     </div>
                                 </td>
                                 <td className="border-primary/20">
-                                    <span className="text-xs font-semibold bg-primary/20 text-primary px-3 py-1 rounded-3xl">Pending</span>
+                                    <span className={`text-xs font-semibold px-3 py-1 rounded-3xl status_style ${
+                                        issue.status === 'ongoing'
+                                            ? 'bg-green-500/20 text-green-500'
+                                            : issue.status === 'ended'
+                                            ? 'bg-yellow-500/20 text-yellow-500'
+                                            : 'bg-primary/20 text-primary'
+                                    }`}>
+                                        {issue.status === 'ongoing' ? 'Ongoing' : issue.status === 'ended' ? 'ended' : 'Ongoing'}
+                                    </span>
                                 </td>
                                 <td className='border-primary/20'>
                                     <div className='flex gap-3 justify-end w-full'>
@@ -206,9 +214,8 @@ const MyIssues = () => {
                                         className="select w-full rounded-xl
                                border border-base-300 bg-base-200
                                focus:outline-none focus:border-primary">
-                                        <option value="pending">Pending</option>
-                                        <option value="inprogress">In Progress</option>
-                                        <option value="resolved">Resolved</option>
+                                        <option value="ongoing">Ongoing</option>
+                                        <option value="ended">Ended</option>
                                     </select>
                                 </div>
                             </div>

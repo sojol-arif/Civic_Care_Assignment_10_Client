@@ -403,6 +403,16 @@ header.nav_header {
   overflow-x: hidden;
 }
 
+/* All page Status */
+[data-theme='light'] .status_style{
+  background-color: #b1f0ce;
+  color: #002114;
+}
+[data-theme='dark'] .status_style{
+  background-color: #2d6a4f;
+  color: #95d4b3;
+}
+
 /* ==========================================================
    4. COMPONENT LAYER — Reusable Class Utilities
    ========================================================== */
