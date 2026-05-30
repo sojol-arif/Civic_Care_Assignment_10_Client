@@ -33,6 +33,7 @@ const IssueDetails = () => {
             .then(res => res.json())
             .then(data => {
                 console.log('Contribute for this product', data);
+                data.sort((a, b) => b.amount - a.amount);
                 setContributes(data);
             })
     }, [issueId]);
@@ -51,6 +52,8 @@ const IssueDetails = () => {
         const phone = e.target.phone.value;
         const address = e.target.address.value;
         const additional = e.target.additonal.value;
+        const fullDate = new Date();
+        const date = fullDate.toLocaleString();
         console.log(name, email, contribute);
 
         const newContribute = {
@@ -60,6 +63,7 @@ const IssueDetails = () => {
             email: email,
             phone: phone,
             address: address,
+            date: date,
             additionalInfo: additional,
         }
 
@@ -84,6 +88,11 @@ const IssueDetails = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+
+                    newContribute._id = data.insertedId;
+                    const newContributes = [...contributes, newContribute];
+                    newContributes.sort((a, b) => b.amount - a.amount);
+                    setContributes(newContributes);
                 }
             });
     }
@@ -237,8 +246,8 @@ const IssueDetails = () => {
                             >
                                 Pay Clean-Up Contribution
                             </button>
-                            <dialog id="contributions" className="modal" ref={bidModalRef}>
-                                <div className="modal-box bg-neutral-content">
+                            <dialog id="contributions" className="modal" ref={bidModalRef} onClick={()=> bidModalRef.current.close()}>
+                                <div className="modal-box bg-neutral-content" onClick={(event)=> event.stopPropagation()}>
                                     <h3 className="font-bold text-lg">Contribute to this Repair</h3>
                                     <div className="modal-action">
                                         <form method="dialog" className='w-full' onSubmit={handleContributeSubmit}>
@@ -329,27 +338,53 @@ const IssueDetails = () => {
 
                 {/* Contribute Table */}
                 <div className="section-space pb-0">
-                    <h2 className="mb-6">Community Contributors</h2>
+                    <div className="flex flex-wrap gap-2 items-center justify-between mb-6">
+
+                        {/* Left — Title */}
+                        <h2 className="text-2xl md:text-3xl font-bold heading-font">
+                            Community Contributors
+                        </h2>
+
+                        {/* Right — Count */}
+                        <div className="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z" />
+                            </svg>
+                            <span className="text-[12px] font-semibold">
+                                {contributes.length} People contributed
+                            </span>
+                        </div>
+
+                    </div>
                     <div className="overflow-x-auto rounded-box border border-primary/20 bg-base-100">
                         <table className="table table_issue_contribute w-full">
                             {/* head */}
                             <thead>
                                 <tr className="bg-secondary/90">
+                                    <th className="border-primary/20">Sl No.</th>
                                     <th className="border-primary/20">Name</th>
                                     <th className="border-primary/20">Date</th>
                                     <th className="border-primary/20">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {contributes.map(contribute =>
+                                {contributes.map((contribute, index) =>
                                     <tr>
+                                        <td className="border-primary/20">
+                                            <span>
+                                                {index +1}
+                                            </span>
+                                        </td>
                                         <td className="border-primary/20">
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
                                                     <div className="mask mask-squircle h-12 w-12">
                                                         <img
-                                                            src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                                                            alt="Avatar Tailwind CSS Component" />
+                                                            src={user?.photoURL}
+                                                            alt="Avatar" />
                                                     </div>
                                                 </div>
                                                 <div>

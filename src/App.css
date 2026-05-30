@@ -179,6 +179,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  form .label{
+    color: var(--color-text) !important;
+    font-weight: 600;
+  }
+
   body,
   .nav_header {
 
@@ -392,6 +397,10 @@ header.nav_header {
   font-weight: 400;
   text-transform: uppercase;
   color: var(--color-text) !important;
+}
+
+.modal-box{
+  overflow-x: hidden;
 }
 
 /* ==========================================================

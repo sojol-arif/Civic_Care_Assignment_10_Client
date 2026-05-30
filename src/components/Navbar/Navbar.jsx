@@ -7,7 +7,6 @@ import Loading from '../Loading/Loading';
 
 const Navbar = () => {
     const { user, signOutLogUser, loading } = use(AuthContext);
-    console.log('User from navbar', user);
 
     const signOutLogin = () => {
         signOutLogUser().then(() => {

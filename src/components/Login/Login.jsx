@@ -1,6 +1,6 @@
 // src/pages/Login/Login.jsx
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { MdLogin } from "react-icons/md";
 import { useDocumentTitle } from "../../hooks/dynamic_title/DynamicTitle";
@@ -11,16 +11,20 @@ export default function Login() {
     // Dynamically set the document title
     useDocumentTitle("Login - Civic Care");
 
-    const {signInWithGoogle} = use(AuthContext);
+    const { signInWithGoogle } = use(AuthContext);
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = (e) => {
+    const location = useLocation();
+
+    const navigation = useNavigate();
+
+    const hangleCreateUser = (e) => {
         e.preventDefault();
         // your login logic
     };
 
-    const handleGoogle = () => {
+    const handleGoogleSignIn = () => {
         // your google login logic
         signInWithGoogle()
             .then((result) => {
@@ -40,6 +44,7 @@ export default function Login() {
                     .then(res => res.json())
                     .then(data => {
                         console.log(data, 'user data from google sign in');
+                        navigation(location.state);
                     });
             }).catch((error) => {
                 console.log(error, 'error from google sign in');
@@ -47,23 +52,20 @@ export default function Login() {
     };
 
     return (
-        <>
-
+        <div>
             <section className="min-h-screen flex flex-col items-center
                           justify-center px-4 pb-0 section-space">
 
                 {/* Card */}
-                <div className="sign_in w-full max-w-lg bg-secondary
-                        border border-base-300
-                        rounded-3xl p-8 md:p-10
-                        shadow-sm">
+                <div className="sign_in w-full max-w-lg bg-secondary border border-base-300
+                        rounded-3xl p-8 md:p-10 shadow-sm">
 
                     {/* Title */}
                     <h2 className="text-3xl font-bold mb-8 heading-font">
                         Welcome Back
                     </h2>
 
-                    <form onSubmit={handleLogin} className="flex flex-col gap-5">
+                    <form onSubmit={hangleCreateUser} className="flex flex-col gap-5">
 
                         {/* Email */}
                         <div className="flex flex-col gap-1">
@@ -106,14 +108,14 @@ export default function Login() {
                              bg-base-100
                              focus:outline-none focus:border-primary
                              placeholder:text-base-content/40"
-                                    
+
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2
                              text-xs font-semibold"
-                                    
+
                                 >
                                     {showPassword ? "Hide" : "Show"}
                                 </button>
@@ -145,7 +147,7 @@ export default function Login() {
                         <div className="flex items-center gap-3 my-1">
                             <div className="flex-1 border-t border-base-300" />
                             <span className="text-xs font-semibold tracking-widest uppercase"
-                                >
+                            >
                                 Or continue with
                             </span>
                             <div className="flex-1 border-t border-base-300" />
@@ -154,12 +156,12 @@ export default function Login() {
                         {/* Google Button */}
                         <button
                             type="button"
-                            onClick={handleGoogle}
+                            onClick={handleGoogleSignIn}
                             className="btn w-full rounded-xl py-3 text-base
                          font-semibold bg-base-100
                          border border-base-300
                          flex items-center justify-center gap-3
-                         hover:bg-base-200 transition-all duration-200 text-neutral-content"
+                         hover:bg-base-200 transition-all duration-200 text-secondary-content"
                         >
                             <FcGoogle className="text-2xl" />
                             Sign in with Google
@@ -175,13 +177,13 @@ export default function Login() {
                     <Link
                         to="/register"
                         className="font-bold"
-                        
+
                     >
                         Register here
                     </Link>
                 </p>
 
             </section>
-        </>
+        </div>
     );
 }

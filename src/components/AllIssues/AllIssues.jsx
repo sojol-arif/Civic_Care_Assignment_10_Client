@@ -51,7 +51,7 @@ const AllIssues = () => {
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className='w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition'
+                            className='w-10 h-10 text-[20px] flex items-center justify-center rounded-lg border border-gray-300 text-secondary-content hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition'
                         >
                             ‹
                         </button>
@@ -64,7 +64,7 @@ const AllIssues = () => {
                                 className={`w-10 h-10 flex items-center justify-center rounded-lg border text-sm font-medium transition
                                     ${currentPage === page
                                         ? 'bg-[#1a5c4a] text-white border-[#1a5c4a]'
-                                        : 'border-gray-300 text-gray-700 hover:bg-gray-100'
+                                        : 'border-gray-300 text-secondary-content hover:bg-gray-100'
                                     }`}
                             >
                                 {page}
@@ -75,7 +75,7 @@ const AllIssues = () => {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className='w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition'
+                            className='w-10 h-10 text-[20px] flex items-center justify-center rounded-lg border border-gray-300 text-secondary-content hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition'
                         >
                             ›
                         </button>

@@ -12,6 +12,8 @@ import MyIssues from './components/MyIssues/MyIssues';
 import MyContributions from './components/MyContributions/MyContributions';
 import IssueDetails from './components/IssueDetails/IssueDetails';
 import Login from './components/Login/Login';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import ReportIssue from './components/ReportIssue/ReportIssue';
 
 const router = createBrowserRouter([
   {
@@ -37,16 +39,20 @@ const router = createBrowserRouter([
       },
       {
         path: "myIssues",
-        element: <MyIssues></MyIssues>,
+        element: <PrivateRoute><MyIssues></MyIssues></PrivateRoute>,
       },
       {
         path: "myContributions",
-        element: <MyContributions></MyContributions>,
+        element: <PrivateRoute><MyContributions></MyContributions></PrivateRoute>,
+      },
+      {
+        path: "reportIssue",
+        element: <PrivateRoute><ReportIssue></ReportIssue></PrivateRoute>,
       },
       {
         path: "/issueDetails/:id",
         loader: ({params}) => fetch(`http://localhost:3000/issues/${params.id}`),
-        Component: IssueDetails
+        element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
       },
     ]
   },
