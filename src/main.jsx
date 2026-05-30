@@ -44,6 +44,7 @@ const router = createBrowserRouter([
       {
         path: "myContributions",
         element: <PrivateRoute><MyContributions></MyContributions></PrivateRoute>,
+        loader: () => fetch('http://localhost:3000/issues')
       },
       {
         path: "reportIssue",
