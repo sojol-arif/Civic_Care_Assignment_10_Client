@@ -3,41 +3,15 @@ import { use } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useDocumentTitle } from '../../hooks/dynamic_title/DynamicTitle';
 import Swal from 'sweetalert2';
-import { RiDeleteBin5Line } from "react-icons/ri";
+import { MdOutlinePictureAsPdf } from "react-icons/md";
+
+import { useLoaderData } from 'react-router';
 
 const MyContribute = () => {
     useDocumentTitle("My Contributions - Civic Care");
+    const issuesAll = useLoaderData();
     const { user } = use(AuthContext);
     const [contributes, setContributes] = useState([]);
-
-    const handleDeleteContribute = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`http://localhost:3000/contributes/${id}`, { method: 'DELETE' })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.deletedCount) {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "Your contribution has been deleted",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            setContributes(prev => prev.filter(c => c._id !== id));
-                        }
-                    });
-            }
-        });
-    };
 
     useEffect(() => {
         if (user?.email) {
@@ -56,8 +30,8 @@ const MyContribute = () => {
                 <table className="table table_issue_contribute w-full">
                     <thead>
                         <tr className="bg-secondary/90">
-                            <th className="border-primary/20">Contributor Name</th>
-                            <th className="border-primary/20">Issue ID</th>
+                            <th className="border-primary/20">Issue Title</th>
+                            <th className="border-primary/20">Category</th>
                             <th className="border-primary/20">Paid Amount</th>
                             <th className="border-primary/20">Date</th>
                             <th className="border-primary/20 flex justify-end">Actions</th>
@@ -73,17 +47,19 @@ const MyContribute = () => {
                         ) : (
                             contributes.map((contribute, index) => (
                                 <tr key={index} className="bg-secondary/90">
-                                    <td className="border-primary/20">{contribute.name}</td>
                                     <td className="border-primary/20">
-                                        <span className='text-xs font-semibold bg-secondary px-3 py-1 rounded-3xl'>
-                                            {contribute.issueId}
+                                        <span className='text-xs font-semibold bg-secondary py-1 rounded-3xl'>
+                                            {issuesAll?.find(issue => issue._id == contribute.issueId).title}
                                         </span>
                                     </td>
-                                    <td className="border-primary/20 font-bold text-primary">
-                                        ${contribute.amount}
+                                    <td className="border-primary/20">
+                                        <span className='category_style text-xs font-semibold px-3 py-1 rounded-3xl'>{issuesAll.find(issue => issue._id == contribute.issueId).category}</span>
+                                    </td>
+                                    <td className="border-primary/20 text-primary">
+                                        ${Number(contribute.amount || 0).toFixed(2)}
                                     </td>
                                     <td className="border-primary/20">
-                                        {new Date(contribute.date).toLocaleDateString('en-US', {
+                                        {new Date(issuesAll?.find(issue => issue._id == contribute.issueId).date).toLocaleDateString('en-US', {
                                             year: 'numeric',
                                             month: 'short',
                                             day: 'numeric'
@@ -92,10 +68,10 @@ const MyContribute = () => {
                                     <td className="border-primary/20">
                                         <div className='flex gap-3 justify-end w-full'>
                                             <span
-                                                className='text-xl cursor-pointer text-red-500 hover:text-red-700'
-                                                onClick={() => handleDeleteContribute(contribute._id)}
+                                                className='text-xl cursor-pointer'
+                                                onClick={() => console.log('downloaded')}
                                             >
-                                                <RiDeleteBin5Line />
+                                                <MdOutlinePictureAsPdf />
                                             </span>
                                         </div>
                                     </td>

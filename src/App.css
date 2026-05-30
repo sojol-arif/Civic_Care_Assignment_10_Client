@@ -394,7 +394,7 @@ header.nav_header {
 }
 
 .table_issue_contribute tr th{
-  font-weight: 400;
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--color-text) !important;
 }
@@ -411,6 +411,15 @@ header.nav_header {
 [data-theme='dark'] .status_style{
   background-color: #2d6a4f;
   color: #95d4b3;
+}
+/* All page category */
+[data-theme='dark'] .category_style{
+  background-color: #353534;
+  color: #bfc9c1;
+}
+
+[data-theme='light'] .category_style{
+  background-color: #e7e7e7;
 }
 
 /* ==========================================================

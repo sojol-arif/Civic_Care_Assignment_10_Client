@@ -100,7 +100,7 @@ const MyIssues = () => {
                                     <div>{issue.title}</div>
                                 </td>
                                 <td className='border-primary/20'>
-                                    <span className='text-xs font-semibold bg-secondary px-3 py-1 rounded-3xl'>{issue.category}</span>
+                                    <span className='text-xs font-semibold px-3 py-1 rounded-3xl category_style'>{issue.category}</span>
                                 </td>
                                 <td className="border-primary/20">
                                     <div>
