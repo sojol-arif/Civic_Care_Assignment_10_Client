@@ -9,7 +9,7 @@ import { use } from "react";
 
 export default function Login() {
     // Dynamically set the document title
-    useDocumentTitle("Login - Civic Care");
+    useDocumentTitle("Login");
 
     const { signInWithGoogle } = use(AuthContext);
 

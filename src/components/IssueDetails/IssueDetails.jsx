@@ -14,11 +14,10 @@ import Swal from 'sweetalert2'
 
 const IssueDetails = () => {
     // Dynamically set the document title
-    useDocumentTitle("Issue Details - Civic Care");
+    useDocumentTitle("Issue Details");
 
     const issue = useLoaderData();
     console.log(issue, 'data from loader');
-    const contributions = [];
     const bidModalRef = useRef(null);
 
     /* User */
@@ -38,9 +37,10 @@ const IssueDetails = () => {
             })
     }, [issueId]);
 
-    console.log(contributes, 'Contributes');
+    // Sum all together
+    const amounts = contributes.map((contribute) => Number(contribute.amount));
+    const totalCollected = amounts.reduce((sum, amount) => sum + amount, 0);
 
-    const totalCollected = contributions?.reduce((sum, c) => sum + c.amount, 0) || 270;
     const target = issue.amount;
     const pct = Math.min(Math.round((totalCollected / target) * 100), 100);
 
@@ -54,7 +54,7 @@ const IssueDetails = () => {
         const additional = e.target.additonal.value;
         const fullDate = new Date();
         const date = fullDate.toLocaleString();
-        console.log(name, email, contribute);
+        console.log(name, email, contribute, date, 'Submit Form modal');
 
         const newContribute = {
             issueId: issueId,
@@ -234,7 +234,7 @@ const IssueDetails = () => {
                             </div>
                             <div className="flex justify-between text-xs"
                             >
-                                <span>${totalCollected.toFixed(2)}</span>
+                                <span>${totalCollected}</span>
                                 <span>Target: ${target.toFixed(2)}</span>
                             </div>
                         </div>
@@ -246,35 +246,49 @@ const IssueDetails = () => {
                             >
                                 Pay Clean-Up Contribution
                             </button>
-                            <dialog id="contributions" className="modal" ref={bidModalRef} onClick={()=> bidModalRef.current.close()}>
-                                <div className="modal-box bg-neutral-content" onClick={(event)=> event.stopPropagation()}>
+                            <dialog id="contributions" className="modal backdrop-blur-sm" ref={bidModalRef} onClick={() => bidModalRef.current.close()}>
+                                <div className="modal-box bg-neutral-content" onClick={(event) => event.stopPropagation()}>
                                     <h3 className="font-bold text-lg">Contribute to this Repair</h3>
-                                    <div className="modal-action">
+                                    <div className="modal-action mt-2">
                                         <form method="dialog" className='w-full' onSubmit={handleContributeSubmit}>
 
-                                            <fieldset className="fieldset">
-                                                {/* Issue Title */}
-                                                <label className="label">Issue Title</label>
-                                                <input type="text" className="input bg-secondary" name="title" placeholder="Broken Streetlight on 5th Avenue" />
+                                            <fieldset className="fieldset flex flex-col gap-4">
+                                                <div>
+                                                    {/* Issue Title */}
+                                                    <label className="label mb-1">Issue Title</label>
+                                                    <input type="text" className="input bg-secondary" name="title" defaultValue={issue.title} readOnly />
+                                                </div>
                                                 {/* Contribution Amount */}
-                                                <label className="label">Contribution Amount ($)</label>
-                                                <input type="text" name="contribute" className="input bg-secondary" placeholder="25.00" />
-                                                {/* Bid */}
-                                                <label className="label">Full Name</label>
-                                                <input type="text" className="input bg-secondary" name='name' placeholder="John Doe" defaultValue={user?.displayName} readOnly />
+                                                <div>
+                                                    <label className="label mb-1">Contribution Amount ($)</label>
+                                                    <input type="text" name="contribute" className="input bg-secondary" placeholder="25.00" />
+                                                </div>
+                                                {/* Full Name */}
+                                                <div>
+                                                    <label className="label mb-1">Full Name</label>
+                                                    <input type="text" className="input bg-secondary" name='name' placeholder="John Doe" defaultValue={user?.displayName} readOnly />
+                                                </div>
                                                 {/* Email */}
-                                                <label className="label">Issue Title</label>
-                                                <input type="email" className="input bg-secondary" name="email" placeholder="john@example.com" defaultValue={user?.email} readOnly />
+                                                <div>
+                                                    <label className="label mb-1">Email</label>
+                                                    <input type="email" className="input bg-secondary" name="email" placeholder="john@example.com" defaultValue={user?.email} readOnly />
+                                                </div>
                                                 {/* Phone Number */}
-                                                <label className="label">Phone</label>
-                                                <input type="phone" className="input bg-secondary" name='phone' placeholder="+1 (555) 000-0000" />
+                                                <div>
+                                                    <label className="label mb-1">Phone</label>
+                                                    <input type="phone" className="input bg-secondary" name='phone' placeholder="+1 (555) 000-0000" />
+                                                </div>
                                                 {/* Billing Address */}
-                                                <label className="label">Billing Address</label>
-                                                <input type="text" className="input bg-secondary" name='address' placeholder="123 Civic St, Metro City, 10001" />
+                                                <div>
+                                                    <label className="label mb-1">Billing Address</label>
+                                                    <input type="text" className="input bg-secondary" name='address' placeholder="123 Civic St, Metro City, 10001" />
+                                                </div>
                                                 {/* Additional Info */}
-                                                <label className="label">Additional Info</label>
-                                                <textarea type="text" className="input bg-secondary" name='additonal' placeholder="AdditionalThe sewage overflow...." />
-                                                <button className="btn btn-neutral mt-4 submit_btn"> Confirm Secure Payment</button>
+                                                <div>
+                                                    <label className="label mb-1">Additional Info</label>
+                                                    <textarea type="text" className="input bg-secondary" name='additonal' placeholder="AdditionalThe sewage overflow...." />
+                                                </div>
+                                                <button className="btn btn-neutral mt-1 submit_btn"> Confirm Secure Payment</button>
                                             </fieldset>
 
                                         </form>
@@ -341,7 +355,7 @@ const IssueDetails = () => {
                     <div className="flex flex-wrap gap-2 items-center justify-between mb-6">
 
                         {/* Left — Title */}
-                        <h2 className="text-2xl md:text-3xl font-bold heading-font">
+                        <h2 className="font-bold heading-font">
                             Community Contributors
                         </h2>
 

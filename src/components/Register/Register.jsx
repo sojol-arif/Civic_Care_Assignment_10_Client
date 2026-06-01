@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const Register = () => {
     // Dynamically set the document title
-    useDocumentTitle("Register - Civic Care");
+    useDocumentTitle("Register");
 
     const { signInWithGoogle, createUser } = use(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
