@@ -8,7 +8,7 @@ import Loading from '../Loading/Loading';
 const ITEMS_PER_PAGE = 4;
 
 const AllIssues = () => {
-    useDocumentTitle("Recent Issues - Civic Care");
+    useDocumentTitle("Recent Issues");
 
     const { loading } = use(AuthContext);
     const issuesAll = useLoaderData();
@@ -30,7 +30,7 @@ const AllIssues = () => {
             <div className='main-container'>
                 <div className='flex justify-center items-center mb-4'>
                     <div className='text-center'>
-                        <h3>Community Issues</h3>
+                        <h2>Community Issues</h2>
                         <p>Discover and track ongoing maintenance requests and community improvements in your neighborhood.</p>
                     </div>
                 </div>

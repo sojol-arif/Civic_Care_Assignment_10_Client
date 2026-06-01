@@ -3,24 +3,31 @@ import { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import Loading from '../Loading/Loading';
+import Swal from 'sweetalert2';
 
 const MyIssues = () => {
     // Dynamically set the document title
-    useDocumentTitle("My Issues - Civic Care");
+    useDocumentTitle("My Issues");
 
     const { user } = use(AuthContext);
     const [editData, setEditData] = useState(null);
     const [issues, setIssues] = useState([]);
+    const [fetchLoading, setFetchLoading] = useState(true);
 
     useEffect(() => {
         if (user?.email) {
+            setFetchLoading(true);
+
             fetch(`http://localhost:3000/issues?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);
                     setIssues(data);
                 }
-                );
+                ).finally(() => {
+                    setFetchLoading(false);
+                })
         }
     }, [user?.email]);
 
@@ -55,6 +62,15 @@ const MyIssues = () => {
                     prev.map(issuem => issuem._id === id ? { ...issuem, ...editData } : issuem)
                 );
                 setEditData(null);
+
+                /* Sweet Alert */
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "My Issue has been updated",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         } catch (err) {
             console.error(err);
@@ -71,6 +87,15 @@ const MyIssues = () => {
                     if (data.deletedCount) {
                         // Missing something like:
                         setIssues(prev => prev.filter(issue => issue._id !== id));
+
+                        /* Sweet Alert */
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "My Issue has been deleted",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 });
         } catch (err) {
@@ -94,42 +119,51 @@ const MyIssues = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {issues.map((issue, index) =>
-                            <tr key={index} className="bg-secondary/90">
-                                <td className="border-primary/20">
-                                    <div>{issue.title}</div>
-                                </td>
-                                <td className='border-primary/20'>
-                                    <span className='text-xs font-semibold px-3 py-1 rounded-3xl category_style'>{issue.category}</span>
-                                </td>
-                                <td className="border-primary/20">
-                                    <div>
-                                        {new Date(issue.date).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'short',
-                                            day: 'numeric'
-                                        })}
-                                    </div>
-                                </td>
-                                <td className="border-primary/20">
-                                    <span className={`text-xs font-semibold px-3 py-1 rounded-3xl status_style ${
-                                        issue.status === 'ongoing'
+                        {!fetchLoading ?
+                            issues.map((issue, index) =>
+                                <tr key={index} className="bg-secondary/90">
+                                    <td className="border-primary/20">
+                                        <div>{issue.title}</div>
+                                    </td>
+                                    <td className='border-primary/20'>
+                                        <span className='text-xs font-semibold px-3 py-1 rounded-3xl category_style'>{issue.category}</span>
+                                    </td>
+                                    <td className="border-primary/20">
+                                        <div>
+                                            {new Date(issue.date).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric'
+                                            })}
+                                        </div>
+                                    </td>
+                                    <td className="border-primary/20">
+                                        <span className={`text-xs font-semibold px-3 py-1 rounded-3xl status_style ${issue.status === 'ongoing'
                                             ? 'bg-green-500/20 text-green-500'
                                             : issue.status === 'ended'
-                                            ? 'bg-yellow-500/20 text-yellow-500'
-                                            : 'bg-primary/20 text-primary'
-                                    }`}>
-                                        {issue.status === 'ongoing' ? 'Ongoing' : issue.status === 'ended' ? 'ended' : 'Ongoing'}
-                                    </span>
-                                </td>
-                                <td className='border-primary/20'>
-                                    <div className='flex gap-3 justify-end w-full'>
-                                        <span className='text-xl cursor-pointer' onClick={() => handleEdit(issue)}><MdOutlineEdit /></span>
-                                        <span className='text-xl cursor-pointer' onClick={() => handleDelete(issue._id)}><RiDeleteBin5Line /></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
+                                                ? 'bg-yellow-500/20 text-yellow-500'
+                                                : 'bg-primary/20 text-primary'
+                                            }`}>
+                                            {issue.status === 'ongoing' ? 'Ongoing' : issue.status === 'ended' ? 'ended' : 'Ongoing'}
+                                        </span>
+                                    </td>
+                                    <td className='border-primary/20'>
+                                        <div className='flex gap-3 justify-end w-full'>
+                                            <span className='text-xl cursor-pointer' onClick={() => handleEdit(issue)}><MdOutlineEdit /></span>
+                                            <span className='text-xl cursor-pointer' onClick={() => handleDelete(issue._id)}><RiDeleteBin5Line /></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
+                            :
+                            (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-10 opacity-50">
+                                        <Loading></Loading>
+                                    </td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
                 {/* ── MODAL ── */}
@@ -140,7 +174,7 @@ const MyIssues = () => {
 
                     {/* Modal Card — stop propagation */}
                     <div className="w-full max-w-xl rounded-3xl p-8
-                          border border-base-300 shadow-2xl bg-base-100"
+                          border border-base-300 shadow-2xl bg-base-100 overflow-y-auto max-h-screen"
                         onClick={(e) => e.stopPropagation()}>
 
                         {/* Modal Header */}
@@ -173,8 +207,7 @@ const MyIssues = () => {
                                     value={editData.title}
                                     onChange={handleChange}
                                     className="input w-full rounded-xl
-                             border border-base-300 bg-base-200
-                             focus:outline-none focus:border-primary"
+                             border border-base-300 focus:outline-none focus:border-primary bg-secondary"
                                 />
                             </div>
 
@@ -189,7 +222,7 @@ const MyIssues = () => {
                                         value={editData.category}
                                         onChange={handleChange}
                                         className="select w-full rounded-xl
-                               border border-base-300 bg-base-200
+                               border border-base-300 bg-secondary
                                focus:outline-none focus:border-primary"
 
                                     >
@@ -212,7 +245,7 @@ const MyIssues = () => {
                                         value={editData.status}
                                         onChange={handleChange}
                                         className="select w-full rounded-xl
-                               border border-base-300 bg-base-200
+                               border border-base-300 bg-secondary
                                focus:outline-none focus:border-primary">
                                         <option value="ongoing">Ongoing</option>
                                         <option value="ended">Ended</option>
@@ -233,7 +266,7 @@ const MyIssues = () => {
                                         value={editData.amount}
                                         onChange={handleChange}
                                         className="input w-full rounded-xl
-                               border border-base-300 bg-base-200
+                               border border-base-300 bg-secondary
                                focus:outline-none focus:border-primary"/>
                                 </div>
 
@@ -247,7 +280,7 @@ const MyIssues = () => {
                                         value={editData.date?.slice(0, 10)}
                                         onChange={handleChange}
                                         className="input w-full rounded-xl
-                               border border-base-300 bg-base-200
+                               border border-base-300 bg-secondary
                                focus:outline-none focus:border-primary"/>
                                 </div>
                             </div>
@@ -262,7 +295,7 @@ const MyIssues = () => {
                                     value={editData.location}
                                     onChange={handleChange}
                                     className="input w-full rounded-xl
-                             border border-base-300 bg-base-200
+                             border border-base-300 bg-secondary
                              focus:outline-none focus:border-primary"/>
                             </div>
 

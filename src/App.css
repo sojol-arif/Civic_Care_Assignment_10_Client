@@ -323,7 +323,7 @@ header.nav_header {
 
 /* Category Cards */
 .category-card_custom {
-  @apply w-full border flex rounded-2xl p-6 flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1;
+  @apply w-full border flex rounded-2xl p-4 md:p-6 flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1;
 }
 
 [data-theme="dark"] .category-card_custom {

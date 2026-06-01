@@ -65,7 +65,7 @@ const Banner = () => {
                                 </SlideUp>
 
                                 <SlideUp delay={50} duration={250}>
-                                    <h1 className="heading-font font-extrabold text-5xl md:text-7xl leading-tight text-white mb-6">
+                                    <h1 className="heading-font font-extrabold text-4xl md:text-7xl leading-tight text-white mb-6">
                                         {slide.title} <br />
                                         <span className="text-[#95d4b3]">{slide.highlight}</span>
                                     </h1>
