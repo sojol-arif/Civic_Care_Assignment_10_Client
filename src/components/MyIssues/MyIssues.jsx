@@ -24,8 +24,7 @@ const MyIssues = () => {
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);
                     setIssues(data);
-                }
-                ).finally(() => {
+                }).finally(() => {
                     setFetchLoading(false);
                 })
         }
@@ -36,7 +35,7 @@ const MyIssues = () => {
     }
 
     const handleChange = (e) => {
-        console.log(setEditData);
+        
         setEditData((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
@@ -119,49 +118,58 @@ const MyIssues = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {!fetchLoading ?
-                            issues.map((issue, index) =>
-                                <tr key={index} className="bg-secondary/90">
-                                    <td className="border-primary/20">
-                                        <div>{issue.title}</div>
-                                    </td>
-                                    <td className='border-primary/20'>
-                                        <span className='text-xs font-semibold px-3 py-1 rounded-3xl category_style'>{issue.category}</span>
-                                    </td>
-                                    <td className="border-primary/20">
-                                        <div>
-                                            {new Date(issue.date).toLocaleDateString('en-US', {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric'
-                                            })}
-                                        </div>
-                                    </td>
-                                    <td className="border-primary/20">
-                                        <span className={`text-xs font-semibold px-3 py-1 rounded-3xl status_style ${issue.status === 'ongoing'
-                                            ? 'bg-green-500/20 text-green-500'
-                                            : issue.status === 'ended'
-                                                ? 'bg-yellow-500/20 text-yellow-500'
-                                                : 'bg-primary/20 text-primary'
-                                            }`}>
-                                            {issue.status === 'ongoing' ? 'Ongoing' : issue.status === 'ended' ? 'ended' : 'Ongoing'}
-                                        </span>
-                                    </td>
-                                    <td className='border-primary/20'>
-                                        <div className='flex gap-3 justify-end w-full'>
-                                            <span className='text-xl cursor-pointer' onClick={() => handleEdit(issue)}><MdOutlineEdit /></span>
-                                            <span className='text-xl cursor-pointer' onClick={() => handleDelete(issue._id)}><RiDeleteBin5Line /></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )
-                            :
+                        {fetchLoading ?
                             (
                                 <tr>
                                     <td colSpan={5} className="text-center py-10 opacity-50">
                                         <Loading></Loading>
                                     </td>
                                 </tr>
+                            )
+                            : issues.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} className="text-center py-10 opacity-50">
+                                        No issues found.
+                                    </td>
+                                </tr>
+                            )
+                            :
+                            (
+                                issues.map((issue) =>
+                                    <tr key={issue._id} className="bg-secondary/90">
+                                        <td className="border-primary/20">
+                                            <div>{issue.title}</div>
+                                        </td>
+                                        <td className='border-primary/20'>
+                                            <span className='text-xs font-semibold px-3 py-1 rounded-3xl category_style'>{issue.category}</span>
+                                        </td>
+                                        <td className="border-primary/20">
+                                            <div>
+                                                {new Date(issue.date).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                })}
+                                            </div>
+                                        </td>
+                                        <td className="border-primary/20">
+                                            <span className={`text-xs font-semibold px-3 py-1 rounded-3xl status_style ${issue.status === 'ongoing'
+                                                ? 'bg-green-500/20 text-green-500'
+                                                : issue.status === 'ended'
+                                                    ? 'bg-yellow-500/20 text-yellow-500'
+                                                    : 'bg-primary/20 text-primary'
+                                                }`}>
+                                                {issue.status}
+                                            </span>
+                                        </td>
+                                        <td className='border-primary/20'>
+                                            <div className='flex gap-3 justify-end w-full'>
+                                                <span className='text-xl cursor-pointer' onClick={() => handleEdit(issue)}><MdOutlineEdit /></span>
+                                                <span className='text-xl cursor-pointer' onClick={() => handleDelete(issue._id)}><RiDeleteBin5Line /></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
                             )
                         }
                     </tbody>
@@ -228,10 +236,8 @@ const MyIssues = () => {
                                     >
                                         <option>Garbage</option>
                                         <option>Road Damage</option>
-                                        <option>Drainage</option>
-                                        <option>Electricity</option>
-                                        <option>Construction</option>
-                                        <option>Water Supply</option>
+                                        <option>Illegal Construction</option>
+                                        <option>Broken Public Property</option>
                                     </select>
                                 </div>
 

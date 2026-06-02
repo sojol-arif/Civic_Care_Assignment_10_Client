@@ -61,17 +61,17 @@ const MyContribute = () => {
                                         <tr key={index} className="bg-secondary/90">
                                             <td className="border-primary/20">
                                                 <span className='text-xs font-semibold bg-secondary py-1 rounded-3xl'>
-                                                    {issue.title}
+                                                    {issue?.title}
                                                 </span>
                                             </td>
                                             <td className="border-primary/20">
-                                                <span className='category_style text-xs font-semibold px-3 py-1 rounded-3xl'>{issue.category}</span>
+                                                <span className='category_style text-xs font-semibold px-3 py-1 rounded-3xl'>{issue?.category}</span>
                                             </td>
                                             <td className="border-primary/20 text-primary">
                                                 ${Number(contribute.amount || 0).toFixed(2)}
                                             </td>
                                             <td className="border-primary/20">
-                                                {new Date(issue.date).toLocaleDateString('en-US', {
+                                                {issue?.date && new Date(issue.date).toLocaleDateString('en-US', {
                                                     year: 'numeric',
                                                     month: 'short',
                                                     day: 'numeric'
