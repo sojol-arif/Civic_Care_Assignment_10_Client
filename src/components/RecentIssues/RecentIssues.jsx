@@ -15,7 +15,7 @@ const RecentIssues = ({ usePromiseRecentIssues }) => {
     console.log(recentIssues, 'recentIssues');
 
     return (
-        <div className='main-container'>
+        <div className='main-container section-space pb-0'>
             <div className='flex justify-between items-center mb-4 flex-wrap gap-3'>
                 <div>
                     <h2>Recent Reports</h2>
