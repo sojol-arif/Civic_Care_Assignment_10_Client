@@ -305,6 +305,20 @@ const MyIssues = () => {
                              focus:outline-none focus:border-primary"/>
                             </div>
 
+                            {/* Description */}
+                            <div>
+                                <label className="text-sm font-semibold block mb-1">
+                                    Description
+                                </label>
+                                <textarea
+                                    name="description"
+                                    value={editData.description}
+                                    onChange={handleChange}
+                                    className="textarea w-full rounded-xl
+                             border border-base-300 bg-secondary
+                             focus:outline-none focus:border-primary"/>
+                            </div>
+
                         </div>
 
                         {/* Modal Footer Buttons */}

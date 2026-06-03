@@ -9,16 +9,10 @@ import { useDocumentTitle } from "../../hooks/dynamic_title/DynamicTitle";
 import Swal from "sweetalert2";
 
 const CATEGORIES = [
-    "Road & Pavement",
-    "Street Lighting",
-    "Sewage & Drainage",
-    "Parks & Green Spaces",
-    "Public Buildings",
-    "Waste & Sanitation",
-    "Water Supply",
-    "Traffic & Signals",
-    "Noise & Pollution",
-    "Other",
+    "Garbage",
+    "Road Damage",
+    "Illegal Construction",
+    "Broken Public Property",
 ];
 
 const today = new Date().toLocaleDateString("en-US", {

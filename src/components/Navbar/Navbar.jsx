@@ -71,7 +71,7 @@ const Navbar = () => {
     </>
 
     return (
-        <header className='nav_header sticky top-0 z-[9999]'>
+        <header className='nav_header sticky top-0 z-[10]'>
             <div className="navbar main-container">
                 <div className="navbar-start w-full">
                     <div className="dropdown mr-3 lg:mr-0">
