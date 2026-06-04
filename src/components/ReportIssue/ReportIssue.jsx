@@ -1,10 +1,7 @@
 import { use, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { CiLocationOn } from "react-icons/ci";
-import { MdOutlineFileUpload } from "react-icons/md";
-import { BsCamera } from "react-icons/bs";
 import { IoSendOutline } from "react-icons/io5";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase/firebase.config";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useDocumentTitle } from "../../hooks/dynamic_title/DynamicTitle";
@@ -28,31 +25,7 @@ export default function ReportIssue() {
 
     const { user } = use(AuthContext);
     const navigate = useNavigate();
-    const fileInputRef = useRef(null);
-
-    const [dragOver, setDragOver] = useState(false);
-    const [previewFiles, setPreviewFiles] = useState([]);
     const [submitting, setSubmitting] = useState(false);
-
-    const handleFiles = (files) => {
-        const valid = Array.from(files).filter((f) => f.type.startsWith("image/"));
-        const previews = valid.map((f) => ({
-            name: f.name,
-            url: URL.createObjectURL(f),
-            file: f,
-        }));
-        setPreviewFiles((prev) => [...prev, ...previews].slice(0, 5));
-    };
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        setDragOver(false);
-        handleFiles(e.dataTransfer.files);
-    };
-
-    const removePreview = (idx) => {
-        setPreviewFiles((prev) => prev.filter((_, i) => i !== idx));
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,14 +34,6 @@ export default function ReportIssue() {
         const form = e.target;
 
         try {
-            let imageUrl = "";
-            if (previewFiles.length > 0) {
-                const file = previewFiles[0].file;
-                const storageRef = ref(storage, `issues/${Date.now()}_${file.name}`);
-                const snapshot = await uploadBytes(storageRef, file);
-                imageUrl = await getDownloadURL(snapshot.ref);
-            }
-
             const newIssue = {
                 title: form.title.value,
                 category: form.category.value,
@@ -78,7 +43,7 @@ export default function ReportIssue() {
                 email: user?.email,
                 date: new Date().toISOString(),
                 status: "ongoing",
-                image: imageUrl,
+                image: form.photourl.value,
             };
 
             const res = await fetch("https://civic-care-server-five.vercel.app/issues", {
@@ -252,68 +217,17 @@ export default function ReportIssue() {
                             {/* Photo Evidence */}
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-semibold">Photo Evidence</label>
+                                <input
+                                    name="photourl"
+                                    type="text"
+                                    required
+                                    placeholder="Image URL"
+                                    className="input w-full rounded border border-base-300
+                                                   bg-secondary
+                                                   focus:outline-none focus:border-primary
+                                                   placeholder:text-base-content/40"
+                                />
 
-                                {/* Drop zone */}
-                                <div
-                                    onClick={() => fileInputRef.current.click()}
-                                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                                    onDragLeave={() => setDragOver(false)}
-                                    onDrop={handleDrop}
-                                    className={`
-                                        relative flex flex-col items-center justify-center gap-3
-                                        rounded-2xl border-2 border-dashed cursor-pointer
-                                        py-10 px-4 transition-all duration-200
-                                        ${dragOver
-                                            ? "border-primary bg-primary/10"
-                                            : "border-base-300 bg-secondary hover:border-primary/60 hover:bg-primary/5"
-                                        }
-                                    `}
-                                >
-                                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                                        <BsCamera className="text-2xl text-primary" />
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="text-sm font-semibold flex items-center gap-1 justify-center">
-                                            <MdOutlineFileUpload className="text-lg text-primary" />
-                                            Click to upload or drag and drop images
-                                        </p>
-                                        <p className="text-xs text-base-content/50 mt-1">
-                                            PNG, JPG up to 10MB — max 5 images
-                                        </p>
-                                    </div>
-                                    <input
-                                        ref={fileInputRef}
-                                        type="file"
-                                        accept="image/*"
-                                        multiple
-                                        className="hidden"
-                                        onChange={(e) => handleFiles(e.target.files)}
-                                    />
-                                </div>
-
-                                {/* Image Previews */}
-                                {previewFiles.length > 0 && (
-                                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-1">
-                                        {previewFiles.map((f, idx) => (
-                                            <div key={idx} className="relative group rounded overflow-hidden aspect-square border border-base-300">
-                                                <img
-                                                    src={f.url}
-                                                    alt={f.name}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => removePreview(idx)}
-                                                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100
-                                                               transition-opacity flex items-center justify-center
-                                                               text-white text-xl font-bold"
-                                                >
-                                                    ×
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
 
                             {/* Divider */}
