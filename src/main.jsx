@@ -53,11 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/issueDetails/:id",
-<<<<<<< HEAD
         loader: ({ params }) => fetch(`https://civic-care-server-five.vercel.app/issues/${params.id}`),
-=======
-        loader: ({ params }) => fetch(`http://localhost:3000/issues/${params.id}`),
->>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
         element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
       },
       {

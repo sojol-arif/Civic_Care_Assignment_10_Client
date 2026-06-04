@@ -12,13 +12,8 @@ export default function StatsBanner() {
   useEffect(() => {
     // Fetch real data from your API
     Promise.all([
-<<<<<<< HEAD
         fetch('https://civic-care-server-five.vercel.app/users').then(res => res.json()),
         fetch('https://civic-care-server-five.vercel.app/issues').then(res => res.json()),
-=======
-        fetch('http://localhost:3000/users').then(res => res.json()),
-        fetch('http://localhost:3000/issues').then(res => res.json()),
->>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
     ]).then(([users, issues]) => {
         setStats({
             totalUsers: users.length,
