@@ -18,7 +18,7 @@ const IssueCard = ({ issue }) => {
                         <p className='mb-4 text-[14px]'>{description}</p>
                         <div className='font-medium text-[14px] tracking-[0.01em] mb-4 flex items-center heading-font text-[14px]'><CiLocationOn className='text-[20px] mr-1' />
                             {location}</div>
-                        <Link to={`/issueDetails/${_id}`} className='text-secondary border-secondary bg-card-btn btn w-full text-[14px] rounded-[8px]'>See Details</Link>
+                        <Link to={`/issueDetails/${_id}`} className='text-secondary border-secondary bg-card-btn btn w-full text-[14px] rounded-[8px] py-6'>See Details</Link>
                     </div>
                 </div>
             </div>

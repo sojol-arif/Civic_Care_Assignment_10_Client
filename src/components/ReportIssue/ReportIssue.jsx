@@ -28,7 +28,7 @@ const today = new Date().toLocaleDateString("en-US", {
 });
 
 export default function ReportIssue() {
-    useDocumentTitle("Report Issue - Civic Care");
+    useDocumentTitle("Report Issue");
 
     const { user } = use(AuthContext);
     const navigate = useNavigate();
@@ -150,7 +150,7 @@ export default function ReportIssue() {
                         </div>
 
                         {/* Main Form Card */}
-                        <div className="bg-secondary border border-base-300 rounded-3xl p-6 md:p-8 flex flex-col gap-6">
+                        <div className="bg-base-100 border border-base-300 rounded-3xl p-6 md:p-8 flex flex-col gap-6">
 
                             {/* Issue Title */}
                             <div className="flex flex-col gap-1.5">
@@ -162,8 +162,8 @@ export default function ReportIssue() {
                                     type="text"
                                     required
                                     placeholder="e.g., Pothole on Main St"
-                                    className="input w-full rounded-xl border border-base-300
-                                               bg-base-100 focus:outline-none focus:border-primary
+                                    className="input w-full rounded border border-base-300
+                                               bg-secondary focus:outline-none focus:border-primary
                                                placeholder:text-base-content/40"
                                 />
                             </div>
@@ -178,8 +178,8 @@ export default function ReportIssue() {
                                         name="category"
                                         required
                                         defaultValue=""
-                                        className="select w-full rounded-xl border border-base-300
-                                                   bg-base-100 focus:outline-none focus:border-primary"
+                                        className="select w-full rounded border border-base-300
+                                                   bg-secondary focus:outline-none focus:border-primary"
                                     >
                                         <option value="" disabled>Select a category</option>
                                         {CATEGORIES.map((cat) => (
@@ -198,8 +198,8 @@ export default function ReportIssue() {
                                         min="0"
                                         step="0.01"
                                         placeholder="Estimated cost"
-                                        className="input w-full rounded-xl border border-base-300
-                                                   bg-base-100 focus:outline-none focus:border-primary
+                                        className="input w-full rounded border border-base-300
+                                                   bg-secondary focus:outline-none focus:border-primary
                                                    placeholder:text-base-content/40"
                                     />
                                 </div>
@@ -217,8 +217,8 @@ export default function ReportIssue() {
                                         type="text"
                                         required
                                         placeholder="Street address or landmark"
-                                        className="input w-full rounded-xl border border-base-300
-                                                   bg-base-100 pl-10
+                                        className="input w-full rounded border border-base-300
+                                                   bg-secondary
                                                    focus:outline-none focus:border-primary
                                                    placeholder:text-base-content/40"
                                     />
@@ -235,8 +235,8 @@ export default function ReportIssue() {
                                     required
                                     rows={5}
                                     placeholder="Provide as much detail as possible to help our field team…"
-                                    className="textarea w-full rounded-xl border border-base-300
-                                               bg-base-100 resize-none
+                                    className="textarea w-full rounded border border-base-300
+                                               bg-secondary resize-none
                                                focus:outline-none focus:border-primary
                                                placeholder:text-base-content/40"
                                 />
@@ -258,7 +258,7 @@ export default function ReportIssue() {
                                         py-10 px-4 transition-all duration-200
                                         ${dragOver
                                             ? "border-primary bg-primary/10"
-                                            : "border-base-300 bg-base-100 hover:border-primary/60 hover:bg-primary/5"
+                                            : "border-base-300 bg-secondary hover:border-primary/60 hover:bg-primary/5"
                                         }
                                     `}
                                 >
@@ -288,7 +288,7 @@ export default function ReportIssue() {
                                 {previewFiles.length > 0 && (
                                     <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-1">
                                         {previewFiles.map((f, idx) => (
-                                            <div key={idx} className="relative group rounded-xl overflow-hidden aspect-square border border-base-300">
+                                            <div key={idx} className="relative group rounded overflow-hidden aspect-square border border-base-300">
                                                 <img
                                                     src={f.url}
                                                     alt={f.name}
@@ -316,9 +316,9 @@ export default function ReportIssue() {
                             <button
                                 type="submit"
                                 disabled={submitting}
-                                className="btn w-full rounded-xl py-3 text-base font-semibold
+                                className="btn w-full rounded py-3 text-base font-semibold
                                            border-none text-white flex items-center justify-center gap-2
-                                           bg-neutral disabled:opacity-60 disabled:cursor-not-allowed"
+                                           bg-accent disabled:opacity-60 disabled:cursor-not-allowed"
                             >
                                 {submitting ? (
                                     <span className="loading loading-spinner loading-sm" />

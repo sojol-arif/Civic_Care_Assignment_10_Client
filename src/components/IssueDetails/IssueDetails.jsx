@@ -14,11 +14,10 @@ import Swal from 'sweetalert2'
 
 const IssueDetails = () => {
     // Dynamically set the document title
-    useDocumentTitle("Issue Details - Civic Care");
+    useDocumentTitle("Issue Details");
 
     const issue = useLoaderData();
     console.log(issue, 'data from loader');
-    const contributions = [];
     const bidModalRef = useRef(null);
 
     /* User */
@@ -38,23 +37,24 @@ const IssueDetails = () => {
             })
     }, [issueId]);
 
-    console.log(contributes, 'Contributes');
+    // Sum all together
+    const amounts = contributes.map((contribute) => Number(contribute.amount));
+    const totalCollected = amounts.reduce((sum, amount) => sum + amount, 0);
 
-    const totalCollected = contributions?.reduce((sum, c) => sum + c.amount, 0) || 270;
-    const target = issue.amount;
+    const target = Number(issue.amount);
     const pct = Math.min(Math.round((totalCollected / target) * 100), 100);
 
     const handleContributeSubmit = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
-        const contribute = e.target.contribute.value;
+        const contribute = Number(e.target.contribute.value);
         const phone = e.target.phone.value;
         const address = e.target.address.value;
         const additional = e.target.additonal.value;
         const fullDate = new Date();
         const date = fullDate.toLocaleString();
-        console.log(name, email, contribute);
+        console.log(name, email, contribute, date, 'Submit Form modal');
 
         const newContribute = {
             issueId: issueId,
@@ -154,263 +154,281 @@ const IssueDetails = () => {
                                     month: "short", day: "numeric", year: "numeric"
                                 })}
                             </span>
-                            <span className="flex items-center gap-1.5 text-xs
+                            <span className={`flex items-center gap-1.5 text-xs
                              font-semibold px-3 py-1.5 rounded-full
-                             bg-red-100 text-red-600">
-                                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                                Ongoing
+                             ${issue.status === 'ongoing'
+                                    ? 'bg-green-500/20 text-green-500'
+                                    : issue.status === 'ended'
+                                        ? 'bg-yellow-500/20 text-yellow-500'
+                                        : 'bg-primary/20 text-primary'
+                             }`}>
+                                {issue.status}
                             </span>
-                        </div>
-
-                        {/* Title */}
-                        <h1 className="text-2xl md:text-[32px] font-extrabold mb-3 heading-font"
-                        >
-                            {issue.title}
-                        </h1>
-
-                        {/* Location */}
-                        <div className="flex items-center gap-4 mb-6">
-                            <span className="flex items-center gap-1 text-sm"
-                            >
-                                <CiLocationOn className="text-lg" />
-                                {issue.location}
-                            </span>
-                            <Link
-                                to="/map"
-                                className="flex items-center gap-1 text-sm
-                         font-semibold text-primary hover:opacity-80"
-                            >
-                                <MdMap /> View on Map
-                            </Link>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="border-t border-base-300 mb-6" />
-
-                        {/* Description */}
-                        <h3 className="text-xl font-bold mb-3 heading-font"
-                        >
-                            Description
-                        </h3>
-                        <p className="text-base leading-relaxed"
-                        >
-                            {issue.description}
-                        </p>
-
-                        {/* Contributors Table */}
-
                     </div>
 
-                    <div className="rounded-3xl border border-base-300
+                    {/* Title */}
+                    <h1 className="text-2xl md:text-[32px] font-extrabold mb-3 heading-font"
+                    >
+                        {issue.title}
+                    </h1>
+
+                    {/* Location */}
+                    <div className="flex items-center gap-4 mb-6">
+                        <span className="flex items-center gap-1 text-sm"
+                        >
+                            <CiLocationOn className="text-lg" />
+                            {issue.location}
+                        </span>
+                        <Link
+                            to="/map"
+                            className="flex items-center gap-1 text-sm
+                         font-semibold text-primary hover:opacity-80"
+                        >
+                            <MdMap /> View on Map
+                        </Link>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-base-300 mb-6" />
+
+                    {/* Description */}
+                    <h3 className="text-xl font-bold mb-3 heading-font"
+                    >
+                        Description
+                    </h3>
+                    <p className="text-base leading-relaxed"
+                    >
+                        {issue.description}
+                    </p>
+
+                    {/* Contributors Table */}
+
+                </div>
+
+                <div className="rounded-3xl border border-base-300
                     bg-secondary p-6 flex flex-col gap-5 h-fit">
 
-                        {/* Budget Header */}
-                        <div className="flex items-start justify-between">
-                            <div>
-                                <p className="text-sm mb-1">
-                                    Suggested Fix Budget
-                                </p>
-                                <p className="text-5xl font-extrabold text-primary">
-                                    ${target.toFixed(2)}
-                                </p>
-                            </div>
-                            <div className="w-10 h-10 rounded-xl bg-primary/20
+                    {/* Budget Header */}
+                    <div className="flex items-start justify-between">
+                        <div>
+                            <p className="text-sm mb-1">
+                                Suggested Fix Budget
+                            </p>
+                            <p className="text-5xl font-extrabold text-primary">
+                                ${target.toFixed(2)}
+                            </p>
+                        </div>
+                        <div className="w-10 h-10 rounded-xl bg-primary/20
                         flex items-center justify-center">
-                                <span className="text-primary text-lg">💵</span>
-                            </div>
+                            <span className="text-primary text-lg">💵</span>
                         </div>
+                    </div>
 
-                        {/* Progress */}
-                        <div className="flex flex-col gap-2">
-                            <div className="flex justify-between text-sm">
-                                <span >Progress</span>
-                                <span className="font-bold text-primary">{pct}% Collected</span>
-                            </div>
-                            <div className="w-full h-2 rounded-full bg-base-300">
-                                <div
-                                    className="h-2 rounded-full bg-primary transition-all duration-500"
-                                    style={{ width: `${pct}%` }}
-                                />
-                            </div>
-                            <div className="flex justify-between text-xs"
-                            >
-                                <span>${totalCollected.toFixed(2)}</span>
-                                <span>Target: ${target.toFixed(2)}</span>
-                            </div>
+                    {/* Progress */}
+                    <div className="flex flex-col gap-2">
+                        <div className="flex justify-between text-sm">
+                            <span >Progress</span>
+                            <span className="font-bold text-primary">{pct}% Collected</span>
                         </div>
+                        <div className="w-full h-2 rounded-full bg-base-300">
+                            <div
+                                className="h-2 rounded-full bg-primary transition-all duration-500"
+                                style={{ width: `${pct}%` }}
+                            />
+                        </div>
+                        <div className="flex justify-between text-xs"
+                        >
+                            <span>${totalCollected}</span>
+                            <span>Target: ${target.toFixed(2)}</span>
+                        </div>
+                    </div>
 
-                        {/* Buttons */}
-                        <div className="flex flex-col gap-3">
-                            <button className="btn w-full rounded-xl font-semibold
+                    {/* Buttons */}
+                    <div className="flex flex-col gap-3">
+                        <button className="btn w-full rounded-xl font-semibold
                      text-sm border-none text-white py-3 bg-primary [--color-primary:#2d6a4f]" onClick={handleBidModalOpen}
-                            >
-                                Pay Clean-Up Contribution
-                            </button>
-                            <dialog id="contributions" className="modal" ref={bidModalRef} onClick={()=> bidModalRef.current.close()}>
-                                <div className="modal-box bg-neutral-content" onClick={(event)=> event.stopPropagation()}>
-                                    <h3 className="font-bold text-lg">Contribute to this Repair</h3>
-                                    <div className="modal-action">
-                                        <form method="dialog" className='w-full' onSubmit={handleContributeSubmit}>
+                        >
+                            Pay Clean-Up Contribution
+                        </button>
+                        <dialog id="contributions" className="modal backdrop-blur-sm" ref={bidModalRef} onClick={() => bidModalRef.current.close()}>
+                            <div className="modal-box bg-neutral-content" onClick={(event) => event.stopPropagation()}>
+                                <h3 className="font-bold text-lg">Contribute to this Repair</h3>
+                                <div className="modal-action mt-2">
+                                    <form method="dialog" className='w-full' onSubmit={handleContributeSubmit}>
 
-                                            <fieldset className="fieldset">
+                                        <fieldset className="fieldset flex flex-col gap-4">
+                                            <div>
                                                 {/* Issue Title */}
-                                                <label className="label">Issue Title</label>
-                                                <input type="text" className="input bg-secondary" name="title" placeholder="Broken Streetlight on 5th Avenue" />
-                                                {/* Contribution Amount */}
-                                                <label className="label">Contribution Amount ($)</label>
+                                                <label className="label mb-1">Issue Title</label>
+                                                <input type="text" className="input bg-secondary" name="title" defaultValue={issue.title} readOnly />
+                                            </div>
+                                            {/* Contribution Amount */}
+                                            <div>
+                                                <label className="label mb-1">Contribution Amount ($)</label>
                                                 <input type="text" name="contribute" className="input bg-secondary" placeholder="25.00" />
-                                                {/* Bid */}
-                                                <label className="label">Full Name</label>
+                                            </div>
+                                            {/* Full Name */}
+                                            <div>
+                                                <label className="label mb-1">Full Name</label>
                                                 <input type="text" className="input bg-secondary" name='name' placeholder="John Doe" defaultValue={user?.displayName} readOnly />
-                                                {/* Email */}
-                                                <label className="label">Issue Title</label>
+                                            </div>
+                                            {/* Email */}
+                                            <div>
+                                                <label className="label mb-1">Email</label>
                                                 <input type="email" className="input bg-secondary" name="email" placeholder="john@example.com" defaultValue={user?.email} readOnly />
-                                                {/* Phone Number */}
-                                                <label className="label">Phone</label>
+                                            </div>
+                                            {/* Phone Number */}
+                                            <div>
+                                                <label className="label mb-1">Phone</label>
                                                 <input type="phone" className="input bg-secondary" name='phone' placeholder="+1 (555) 000-0000" />
-                                                {/* Billing Address */}
-                                                <label className="label">Billing Address</label>
+                                            </div>
+                                            {/* Billing Address */}
+                                            <div>
+                                                <label className="label mb-1">Billing Address</label>
                                                 <input type="text" className="input bg-secondary" name='address' placeholder="123 Civic St, Metro City, 10001" />
-                                                {/* Additional Info */}
-                                                <label className="label">Additional Info</label>
+                                            </div>
+                                            {/* Additional Info */}
+                                            <div>
+                                                <label className="label mb-1">Additional Info</label>
                                                 <textarea type="text" className="input bg-secondary" name='additonal' placeholder="AdditionalThe sewage overflow...." />
-                                                <button className="btn btn-neutral mt-4 submit_btn"> Confirm Secure Payment</button>
-                                            </fieldset>
+                                            </div>
+                                            <button className="btn btn-neutral mt-1 submit_btn"> Confirm Secure Payment</button>
+                                        </fieldset>
 
-                                        </form>
-                                    </div>
-                                    <button className='btn btn-secondary my-3 ml-auto block' onClick={() => bidModalRef.current.close()}>Close</button>
+                                    </form>
                                 </div>
-                            </dialog>
-                            <button
-                                className="btn w-full rounded-xl font-semibold
+                                <button className='btn btn-secondary my-3 ml-auto block' onClick={() => bidModalRef.current.close()}>Close</button>
+                            </div>
+                        </dialog>
+                        <button
+                            className="btn w-full rounded-xl font-semibold
                      text-sm py-3 bg-transparent
                      border border-base-300
                      hover:bg-base-300 transition-all duration-200"
 
-                            >
-                                Volunteer for Fix
-                            </button>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="border-t border-base-300" />
-
-                        {/* Trust Badges */}
-                        <div className="flex flex-col gap-4">
-                            <div className="flex items-start gap-3">
-                                <div className="w-9 h-9 rounded-full bg-primary/10
-                          flex items-center justify-center shrink-0">
-                                    <FaInfoCircle className="text-primary text-sm" />
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold"
-                                    >
-                                        Tax Deductible
-                                    </p>
-                                    <p className="text-xs mt-0.5"
-                                    >
-                                        All civic contributions qualify for municipal tax credits.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-3">
-                                <div className="w-9 h-9 rounded-full bg-primary/10
-                          flex items-center justify-center shrink-0">
-                                    <FaCog className="text-primary text-sm" />
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold"
-                                    >
-                                        Verified Issue
-                                    </p>
-                                    <p className="text-xs mt-0.5"
-                                    >
-                                        Confirmed by City Maintenance Dept on Oct 25.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
+                        >
+                            Volunteer for Fix
+                        </button>
                     </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-base-300" />
+
+                    {/* Trust Badges */}
+                    <div className="flex flex-col gap-4">
+                        <div className="flex items-start gap-3">
+                            <div className="w-9 h-9 rounded-full bg-primary/10
+                          flex items-center justify-center shrink-0">
+                                <FaInfoCircle className="text-primary text-sm" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold"
+                                >
+                                    Tax Deductible
+                                </p>
+                                <p className="text-xs mt-0.5"
+                                >
+                                    All civic contributions qualify for municipal tax credits.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                            <div className="w-9 h-9 rounded-full bg-primary/10
+                          flex items-center justify-center shrink-0">
+                                <FaCog className="text-primary text-sm" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold"
+                                >
+                                    Verified Issue
+                                </p>
+                                <p className="text-xs mt-0.5"
+                                >
+                                    Confirmed by City Maintenance Dept on Oct 25.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
 
-                {/* Contribute Table */}
-                <div className="section-space pb-0">
-                    <div className="flex flex-wrap gap-2 items-center justify-between mb-6">
+            {/* Contribute Table */}
+            <div className="section-space pb-0">
+                <div className="flex flex-wrap gap-2 items-center justify-between mb-6">
 
-                        {/* Left — Title */}
-                        <h2 className="text-2xl md:text-3xl font-bold heading-font">
-                            Community Contributors
-                        </h2>
+                    {/* Left — Title */}
+                    <h2 className="font-bold heading-font">
+                        Community Contributors
+                    </h2>
 
-                        {/* Right — Count */}
-                        <div className="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                className="w-5 h-5" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                    d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z" />
-                            </svg>
-                            <span className="text-[12px] font-semibold">
-                                {contributes.length} People contributed
-                            </span>
-                        </div>
-
+                    {/* Right — Count */}
+                    <div className="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z" />
+                        </svg>
+                        <span className="text-[12px] font-semibold">
+                            {contributes.length} People contributed
+                        </span>
                     </div>
-                    <div className="overflow-x-auto rounded-box border border-primary/20 bg-base-100">
-                        <table className="table table_issue_contribute w-full">
-                            {/* head */}
-                            <thead>
-                                <tr className="bg-secondary/90">
-                                    <th className="border-primary/20">Name</th>
-                                    <th className="border-primary/20">Date</th>
-                                    <th className="border-primary/20">Status</th>
-                                    <th className="border-primary/20">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contributes.map((contribute, index) =>
-                                    <tr key={index} className="bg-secondary/90">
-                                        <td className="border-primary/20">
-                                            <div className="flex items-center gap-3">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle h-12 w-12">
-                                                        <img
-                                                            src={user?.photoURL}
-                                                            alt="Avatar" />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold">{contribute.name}</div>
-                                                    <div className="text-sm opacity-50">{contribute.address}</div>
+
+                </div>
+                <div className="overflow-x-auto rounded-box border border-primary/20 bg-base-100">
+                    <table className="table table_issue_contribute w-full">
+                        {/* head */}
+                        <thead>
+                            <tr className="bg-secondary/90">
+                                <th className="border-primary/20">Name</th>
+                                <th className="border-primary/20">Date</th>
+                                <th className="border-primary/20">Status</th>
+                                <th className="border-primary/20">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {contributes.map((contribute, index) =>
+                                <tr key={index} className="bg-secondary/90">
+                                    <td className="border-primary/20">
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12">
+                                                    <img
+                                                        src={user?.photoURL}
+                                                        alt="Avatar" />
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td className="border-primary/20">
                                             <div>
-                                                {new Date(contribute.date).toLocaleDateString('en-US', {
-                                                    year: 'numeric',
-                                                    month: 'short',
-                                                    day: 'numeric'
-                                                })}
+                                                <div className="font-bold">{contribute.name}</div>
+                                                <div className="text-sm opacity-50">{contribute.address}</div>
                                             </div>
-                                        </td>
-                                        <td className="border-primary/20">
-                                            <span className="text-xs font-semibold bg-primary text-primary px-3 py-1 rounded-3xl status_style">Ongoing</span>
-                                        </td>
-                                        <td className="border-primary/20">
-                                            <div className="text-[22px] font-bold text-primary">${contribute.amount}</div>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
+                                        </div>
+                                    </td>
+                                    <td className="border-primary/20">
+                                        <div>
+                                            {new Date(contribute.date).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric'
+                                            })}
+                                        </div>
+                                    </td>
+                                    <td className="border-primary/20">
+                                        <span className="text-xs font-semibold bg-primary text-primary px-3 py-1 rounded-3xl status_style">Ongoing</span>
+                                    </td>
+                                    <td className="border-primary/20">
+                                        <div className="text-[22px] font-bold text-primary">${contribute.amount}</div>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        </div >
     );
 };
 

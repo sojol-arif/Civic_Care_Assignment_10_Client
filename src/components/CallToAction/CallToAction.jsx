@@ -52,7 +52,7 @@ export default function CallToAction() {
                                     {/* Primary — dark green filled */}
                                     <Link
                                         to="/volunteer"
-                                        className="bg-neutral text-neutral-content btn border-none shadow-none"
+                                        className="bg-neutral rounded-xl text-neutral-content btn border-none shadow-none"
                                     >
                                         Sign Up as Volunteer
                                     </Link>
@@ -60,7 +60,7 @@ export default function CallToAction() {
                                     {/* Secondary — outline */}
                                     <Link
                                         to="/volunteer"
-                                        className="bg-transparent border border-primary-content text-primary-content btn shadow-none"
+                                        className="bg-transparent rounded-xl border border-primary-content text-primary-content btn shadow-none"
                                     >
                                         Learn More
                                     </Link>

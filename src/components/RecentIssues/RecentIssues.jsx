@@ -7,7 +7,7 @@ import Loading from '../Loading/Loading';
 
 const RecentIssues = ({ usePromiseRecentIssues }) => {
     // Dynamically set the document title
-    useDocumentTitle("Recent Issues - Civic Care");
+    useDocumentTitle("Recent Issues");
 
     const { loading } = use(AuthContext);
 
@@ -15,8 +15,8 @@ const RecentIssues = ({ usePromiseRecentIssues }) => {
     console.log(recentIssues, 'recentIssues');
 
     return (
-        <div className='main-container'>
-            <div className='flex justify-between items-center mb-4'>
+        <div className='main-container section-space pb-0'>
+            <div className='flex justify-between items-center mb-4 flex-wrap gap-3'>
                 <div>
                     <h2>Recent Reports</h2>
                     <p>Real-time updates from your community stewards.</p>

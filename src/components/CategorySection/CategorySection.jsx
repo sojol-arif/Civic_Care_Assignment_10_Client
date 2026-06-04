@@ -1,7 +1,6 @@
 import { Link } from "react-router";
-import { FaTrash, FaRoad, FaLightbulb, FaTint, FaTree } from "react-icons/fa";
+import { FaTrash, FaRoad, FaWrench, FaHardHat } from "react-icons/fa";
 import { SlideUp } from '../../hooks/reveal_awesome_animation_custom/ReactAnimation';
-import { FaArrowRight } from "react-icons/fa6";
 
 const categories = [
     {
@@ -13,31 +12,24 @@ const categories = [
     },
     {
         id: 2,
-        icon: <FaRoad />,
-        name: "Road Damage",
+        icon: <FaHardHat />,
+        name: "Illegal Construction",
         ongoing: 89,
-        to: "/issues?category=road-damage",
+        to: "/issues?category=illegal-construction",
     },
     {
         id: 3,
-        icon: <FaLightbulb />,
-        name: "Street Lights",
+        icon: <FaWrench />,
+        name: "Broken Public Property",
         ongoing: 42,
-        to: "/issues?category=street-lights",
+        to: "/issues?category=broken-public-property",
     },
     {
         id: 4,
-        icon: <FaTint />,
-        name: "Leaking Pipes",
+        icon: <FaRoad />,
+        name: "Road Damage",
         ongoing: 15,
-        to: "/issues?category=leaking-pipes",
-    },
-    {
-        id: 5,
-        icon: <FaTree />,
-        name: "Public Parks",
-        ongoing: 31,
-        to: "/issues?category=public-parks",
+        to: "/issues?category=road-damage",
     },
 ];
 
@@ -51,11 +43,11 @@ const CategorySection = () => {
 
                 {/* Header Row */}
                 <SlideUp>
-                    <div className="flex items-start justify-between mb-10">
+                    <div className="flex items-start justify-between mb-10 flex-wrap gap-3">
 
                         {/* Left */}
                         <div>
-                            <h2 className="text-2xl md:text-3xl font-bold heading-font">
+                            <h2 className="font-bold heading-font">
                                 Issue Categories
                             </h2>
                             <p className="text-sm mt-1">
@@ -78,7 +70,7 @@ const CategorySection = () => {
 
                 {/* Cards Grid */}
                 <SlideUp cascade damping={0.12}>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {categories.map((cat) => (
                             <Link
                                 key={cat.id}
@@ -91,7 +83,7 @@ const CategorySection = () => {
                                 </div>
 
                                 {/* Text */}
-                                <div className="mt-6">
+                                <div className="mt-4">
                                     <h3 className="text-base font-semibold mb-1">
                                         {cat.name}
                                     </h3>
