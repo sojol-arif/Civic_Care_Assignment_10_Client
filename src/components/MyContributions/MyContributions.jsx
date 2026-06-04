@@ -14,12 +14,20 @@ const MyContribute = () => {
     const { user } = use(AuthContext);
     const [contributes, setContributes] = useState([]);
     const [fetchLoading, setFetchLoading] = useState(true);
+<<<<<<< HEAD
+=======
+
+>>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
 
     useEffect(() => {
         if (user?.email) {
             setFetchLoading(true);
 
+<<<<<<< HEAD
             fetch(`https://civic-care-server-five.vercel.app/contributes?email=${user.email}`)
+=======
+            fetch(`http://localhost:3000/contributes?email=${user.email}`)
+>>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
                 .then(res => res.json())
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);

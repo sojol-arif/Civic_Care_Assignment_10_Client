@@ -19,7 +19,11 @@ const MyIssues = () => {
         if (user?.email) {
             setFetchLoading(true);
 
+<<<<<<< HEAD
             fetch(`https://civic-care-server-five.vercel.app/issues?email=${user.email}`)
+=======
+            fetch(`http://localhost:3000/issues?email=${user.email}`)
+>>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
                 .then(res => res.json())
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);
@@ -317,6 +321,7 @@ const MyIssues = () => {
                                     onChange={handleChange}
                                     className="input w-full rounded-xl
                              border border-base-300 bg-secondary
+<<<<<<< HEAD
                              focus:outline-none focus:border-primary"/>
                             </div>
 
@@ -331,6 +336,8 @@ const MyIssues = () => {
                                     onChange={handleChange}
                                     className="textarea w-full rounded-xl
                              border border-base-300 bg-secondary
+=======
+>>>>>>> aa5e0f904e12a8929856510bbc61eaa9e73a4a6d
                              focus:outline-none focus:border-primary"/>
                             </div>
 
