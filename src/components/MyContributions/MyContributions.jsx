@@ -19,7 +19,7 @@ const MyContribute = () => {
         if (user?.email) {
             setFetchLoading(true);
 
-            fetch(`http://localhost:3000/contributes?email=${user.email}`)
+            fetch(`https://civic-care-server-five.vercel.app/contributes?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);

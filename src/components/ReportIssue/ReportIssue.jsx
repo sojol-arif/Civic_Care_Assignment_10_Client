@@ -4,6 +4,8 @@ import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { BsCamera } from "react-icons/bs";
 import { IoSendOutline } from "react-icons/io5";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase/firebase.config";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useDocumentTitle } from "../../hooks/dynamic_title/DynamicTitle";
 import Swal from "sweetalert2";
@@ -57,20 +59,29 @@ export default function ReportIssue() {
         setSubmitting(true);
 
         const form = e.target;
-        const newIssue = {
-            title: form.title.value,
-            category: form.category.value,
-            amount: parseFloat(form.amount.value) || 0,
-            location: form.location.value,
-            description: form.description.value,
-            email: user?.email,
-            date: new Date().toISOString(),
-            status: "ongoing",
-            image: previewFiles[0]?.url || "",
-        };
 
         try {
-            const res = await fetch("http://localhost:3000/issues", {
+            let imageUrl = "";
+            if (previewFiles.length > 0) {
+                const file = previewFiles[0].file;
+                const storageRef = ref(storage, `issues/${Date.now()}_${file.name}`);
+                const snapshot = await uploadBytes(storageRef, file);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            }
+
+            const newIssue = {
+                title: form.title.value,
+                category: form.category.value,
+                amount: parseFloat(form.amount.value) || 0,
+                location: form.location.value,
+                description: form.description.value,
+                email: user?.email,
+                date: new Date().toISOString(),
+                status: "ongoing",
+                image: imageUrl,
+            };
+
+            const res = await fetch("https://civic-care-server-five.vercel.app/issues", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(newIssue),
@@ -86,9 +97,11 @@ export default function ReportIssue() {
                     timer: 1800,
                 });
                 navigate("/myIssues");
+            } else {
+                Swal.fire({ icon: "error", title: "Submission failed", text: data.message || "Please try again." });
             }
-        } catch {
-            Swal.fire({ icon: "error", title: "Submission failed", text: "Please try again." });
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "Submission failed", text: err.message || "Please try again." });
         } finally {
             setSubmitting(false);
         }

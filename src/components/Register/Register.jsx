@@ -25,7 +25,7 @@ const Register = () => {
                     photoURL: result.user.photoURL,
                     uid: result.user.uid
                 };
-                fetch('http://localhost:3000/users', {
+                fetch('https://civic-care-server-five.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -55,7 +55,7 @@ const Register = () => {
                     photoURL: result.user.photoURL,
                     uid: result.user.uid
                 };
-                fetch('http://localhost:3000/users', {
+                fetch('https://civic-care-server-five.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

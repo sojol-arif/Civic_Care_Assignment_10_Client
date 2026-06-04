@@ -19,7 +19,7 @@ const MyIssues = () => {
         if (user?.email) {
             setFetchLoading(true);
 
-            fetch(`http://localhost:3000/issues?email=${user.email}`)
+            fetch(`https://civic-care-server-five.vercel.app/issues?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     data.sort((a, b) => b.amount - a.amount);
@@ -43,19 +43,20 @@ const MyIssues = () => {
     }
 
     const handleEdit = (issue) => {
+
         setEditData({ ...issue });
     }
 
     // ── Save to API ──
     const handleSave = async (id) => {
+        console.log('Saving edit for issue ID:', id, 'with data:', editData);
         try {
-            const res = await fetch(`http://localhost:3000/issues/${id}`, {
+            const res = await fetch(`https://civic-care-server-five.vercel.app/issues/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(editData),
             });
             if (res.ok) {
-                // refresh your data here
                 console.log('Done Adding');
                 setIssues(prev =>
                     prev.map(issuem => issuem._id === id ? { ...issuem, ...editData } : issuem)
@@ -79,7 +80,7 @@ const MyIssues = () => {
     // ── Delete Issue ──
     const handleDelete = async (id) => {
         try {
-            await fetch(`http://localhost:3000/issues/${id}`, {
+            await fetch(`https://civic-care-server-five.vercel.app/issues/${id}`, {
                 method: "DELETE"
             }).then(res => res.json())
                 .then(data => {
@@ -289,6 +290,20 @@ const MyIssues = () => {
                                border border-base-300 bg-secondary
                                focus:outline-none focus:border-primary"/>
                                 </div>
+                            </div>
+
+                            {/* Photo */}
+                            <div>
+                                <label className="text-sm font-semibold block mb-1">
+                                    Photo
+                                </label>
+                                <input
+                                    name="image"
+                                    value={editData.image}
+                                    onChange={handleChange}
+                                    className="input w-full rounded-xl
+                             border border-base-300 bg-secondary
+                             focus:outline-none focus:border-primary"/>
                             </div>
 
                             {/* Location */}

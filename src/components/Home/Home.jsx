@@ -5,7 +5,11 @@ import CategorySection from '../CategorySection/CategorySection';
 import CallToAction from '../CallToAction/CallToAction';
 import StateBanner from '../StateBanner/StateBanner';
 
-const usePromiseRecentIssues = fetch('http://localhost:3000/recent-issues').then(res => res.json());
+const usePromiseRecentIssues = fetch('https://civic-care-server-five.vercel.app/recent-issues')
+  .then(res => {
+    if (!res.ok) throw new Error(`Server returned ${res.status}`);
+    return res.json();
+  });
 
 const Home = () => {
     // Dynamically set the document title

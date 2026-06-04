@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import RootLayout from './layouts/RootLayout'
 import Home from './components/Home/Home'
-import './App.css'
+import '../src/App.css'
 import AllIssues from './components/AllIssues/AllIssues';
 import AuthProvider from './contexts/AuthProvider';
 import Register from './components/Register/Register';
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "allIssues",
-        loader: () => fetch('http://localhost:3000/issues'),
+        loader: () => fetch('https://civic-care-server-five.vercel.app/issues'),
         Component: AllIssues,
       },
       {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       {
         path: "myContributions",
         element: <PrivateRoute><MyContributions></MyContributions></PrivateRoute>,
-        loader: () => fetch('http://localhost:3000/issues')
+        loader: () => fetch('https://civic-care-server-five.vercel.app/issues')
       },
       {
         path: "reportIssue",
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/issueDetails/:id",
-        loader: ({ params }) => fetch(`http://localhost:3000/issues/${params.id}`),
+        loader: ({ params }) => fetch(`https://civic-care-server-five.vercel.app/issues/${params.id}`),
         element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
       },
       {

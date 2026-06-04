@@ -28,7 +28,7 @@ const IssueDetails = () => {
     const [contributes, setContributes] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/issues/contribute/${issueId}`)
+        fetch(`https://civic-care-server-five.vercel.app/issues/contribute/${issueId}`)
             .then(res => res.json())
             .then(data => {
                 console.log('Contribute for this product', data);
@@ -67,7 +67,7 @@ const IssueDetails = () => {
             additionalInfo: additional,
         }
 
-        fetch('http://localhost:3000/contributes', {
+        fetch('https://civic-care-server-five.vercel.app/contributes', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
