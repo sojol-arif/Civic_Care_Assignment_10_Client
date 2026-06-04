@@ -83,22 +83,12 @@
 }
 
 
-/* ==================      class=" [--color-primary:red]   "====================
- class=" [--color-primary:red]   "
-
-<div className="category-icon-box max-w-max bg-primary/20  [--color-primary:red] inline-flex items-center justify-center rounded p-2"><span className="text-xl">{cat.icon}</span></div>   
-        
-   ========================================================== */
-
-
-
 /* ==========================================================
    1. DAISYUI DARK THEME
    ========================================================== */
 
 @plugin "daisyui/theme" {
   name: "dark";
-  default: true;
 
   /* ── Brand ── */
   --color-primary: #95d4b3;
